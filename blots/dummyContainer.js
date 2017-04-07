@@ -3,7 +3,7 @@ import Container from './container';
 import Block, { BlockEmbed } from './block';
 import TextBlot from './text';
 
-class DummyContainer extends Block {
+class DummyContainer extends Container {
   static randomId() {
     return Math.random().toString(36).slice(2);
   }
@@ -18,22 +18,17 @@ class DummyContainer extends Block {
     return node;
   }
 
-  insertBefore(blot, ref) {
-    super.insertBefore(blot, ref);
-    console.log(blot, ref);
-  }
-  insertAt(index, value, def) {
-    super.insertAt(index, value, def);
-    console.log(index, value, def);
+  replace(target) {
+    let item = Parchment.create(this.statics.defaultChild);
+    target.moveChildren(item);
+    this.appendChild(item);
+
+    if (target.parent == null) return;
+    super.replace(target)
   }
 
-  optimize() {
-    console.log('optimize');
-    return super.optimize();
-  }
   formats() {
-    console.log('formats');
-    return super.formats();
+    return { [this.statics.blotName]: this.domNode.getAttribute('id') }
   }
 
 }

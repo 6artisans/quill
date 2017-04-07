@@ -10,10 +10,7 @@ import Inline from './blots/inline';
 import Scroll from './blots/scroll';
 import TextBlot from './blots/text';
 
-import Table from './blots/table';
-import TableRow from './blots/table_row';
-import TableCell from './blots/table_cell';
-import ContainBlot from './blots/contain';
+import DummyContainer from './blots/dummyContainer';
 
 import Clipboard from './modules/clipboard';
 import History from './modules/history';
@@ -30,10 +27,7 @@ Quill.register({
   'blots/scroll'       : Scroll,
   'blots/text'         : TextBlot,
 
-  'blots/table'        : Table,
-  'blots/table_row'    : TableRow,
-  'blots/table_cell'   : TableCell,
-  'blots/contain'      : ContainBlot,
+  'blots/dummyContainer': DummyContainer,
 
   'modules/clipboard'  : Clipboard,
   'modules/history'    : History,

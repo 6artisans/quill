@@ -27,8 +27,8 @@ import CodeBlock, { Code as InlineCode } from './formats/code';
 
 import Formula from './modules/formula';
 import Syntax from './modules/syntax';
-import Toolbar from './modules/toolbar_extended';
-import TableHandler from './modules/table_handler';
+import Toolbar from './modules/toolbar';
+// import TableHandler from './modules/table_handler';
 
 import Icons from './ui/icons';
 import Picker from './ui/picker';
@@ -90,7 +90,7 @@ Quill.register({
   'modules/formula': Formula,
   'modules/syntax': Syntax,
   'modules/toolbar': Toolbar,
-  'modules/table_handler' : TableHandler,
+  // 'modules/table_handler' : TableHandler,
 
   'themes/bubble': BubbleTheme,
   'themes/snow': SnowTheme,

@@ -28,14 +28,20 @@ window.quillTable = quill => {
   // });
 
   let delta = {
-    ops: [
-      { insert: 'ahoj ' },
-      { insert: '\n', attributes: { dummyContainer: 'id' } },
-      { insert: ' je text\n' },
-    ],
+    "ops": [
+      {"insert": "Toto je v podminenem bloku "},
+      {"insert": "\n", "attributes": {"dummyContainer": "condition"}},
+      {"insert": " a tohle taky."},
+      {"insert": "\n", "attributes": {"dummyContainer": "condition"}},
+      {"insert": "\n"},
+      {"insert": " Ted mam otevreny command dummyContainer a jak pisu dal, tak se to porad vklada."},
+      {"insert": "\n", "attributes": {"dummyContainer": "condition"}},
+    ]
   };
 
+
   quill.setContents(delta);
+
 
   setInterval(
     function() {
@@ -50,7 +56,7 @@ window.quillTable = quill => {
   );
   setInterval(
     function() {
-      document.getElementById('output_html').value = quill.root.innerHTML;
+      document.getElementById('output_html').value = quill.root.innerHTML
     },
     500
   );

@@ -19,28 +19,14 @@ let toolbarOptions = [
   [{ 'align': [] }],
 
   ['clean'],                                         // remove formatting button
-  ['create-dummy-container']
+  ['dummy-container']
 ];
 
-let quill = new Quill('#editor', {
+window.quill = new Quill('#editor', {
   modules: {
     toolbar: toolbarOptions
   },
   theme: 'snow'
-});
-
-let toolbar = quill.getModule('toolbar');
-toolbar.addHandler('create-dummy-container', function() {
-  console.log('create-dummy-container')
-});
-
-var customButton = document.querySelector('.ql-create-dummy-container');
-customButton.addEventListener('click', function() {
-  // var range = quill.getSelection();
-  // if (range) {
-  //   quill.insertText(range.index, "Ω");
-  // }
-  console.log("kontejnéééér")
 });
 
 let delta = {

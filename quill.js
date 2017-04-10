@@ -24,6 +24,7 @@ import Image from './formats/image';
 import Video from './formats/video';
 
 import CodeBlock, { Code as InlineCode } from './formats/code';
+import DummyContainer from './blots/dummy-container';
 
 import Formula from './modules/formula';
 import Syntax from './modules/syntax';
@@ -73,6 +74,7 @@ Quill.register({
   'formats/code-block': CodeBlock,
   'formats/header': Header,
   'formats/list': List,
+  'formats/dummy-container': DummyContainer,
 
   'formats/bold': Bold,
   'formats/code': InlineCode,
@@ -90,7 +92,6 @@ Quill.register({
   'modules/formula': Formula,
   'modules/syntax': Syntax,
   'modules/toolbar': Toolbar,
-  // 'modules/table_handler' : TableHandler,
 
   'themes/bubble': BubbleTheme,
   'themes/snow': SnowTheme,

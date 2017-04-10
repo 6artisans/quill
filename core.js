@@ -10,7 +10,7 @@ import Inline from './blots/inline';
 import Scroll from './blots/scroll';
 import TextBlot from './blots/text';
 
-import DummyContainer from './blots/dummyContainer';
+import DummyContainer from './blots/dummy-container';
 
 import Clipboard from './modules/clipboard';
 import History from './modules/history';

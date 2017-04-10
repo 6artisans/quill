@@ -87,8 +87,8 @@ class DummyContainer extends Container {
 
 }
 
-DummyContainer.blotName = 'dummyContainer';
-DummyContainer.tagName = 'dummyContainer';
+DummyContainer.blotName = 'dummy-container';
+DummyContainer.tagName = 'dummy-container';
 DummyContainer.scope = Parchment.Scope.BLOCK_BLOT;
 DummyContainer.defaultChild = 'block';
 DummyContainer.allowedChildren = [Block, BlockEmbed, TextBlot, List];

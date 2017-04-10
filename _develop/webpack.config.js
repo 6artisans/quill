@@ -39,9 +39,9 @@ module.exports = function(env) {
       'quill.core': './assets/core.styl',
       'quill.bubble': './assets/bubble.styl',
       'quill.snow': './assets/snow.styl',
-      'quill.table': './assets/quill.table.styl',
       'unit.js': './test/unit.js',
-      'quill.table.load.js': './quill.table.load.js'
+      'quill.table.load.js': './quill.table.load.js',
+      'container': './assets/container.styl'
     },
     output: {
       filename: '[name]',

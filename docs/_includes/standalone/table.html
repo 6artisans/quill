@@ -4,31 +4,19 @@
   <link href="https://cdn.quilljs.com/1.2.2/quill.snow.css" rel="stylesheet">
 
   <!-- Include the Quill extended toolbar CSS -->
-  <link href="{{site.cdn}}{{site.version}}/quill.table.css" rel="stylesheet">
+  <link href="{{site.cdn}}{{site.version}}/container.css" rel="stylesheet">
 
-  <script type="text/javascript" src="{{site.cdn}}{{site.version}}/quill.table.load.js"></script>
   <script type="text/javascript" src="{{site.cdn}}{{site.version}}/{{site.quill}}"></script>
 
 
   <body>
-    <!-- Create the toolbar container -->
-    <div id="toolbar"></div>
-
     <!-- Create the editor container -->
     <div id="editor"></div>
 
     <!-- Initialize Quill editor -->
-    <script>
-      let quill = new Quill('#editor', {
-        modules: {
-          toolbar: {}
-        },
-        theme: 'snow'
-      });
+    <script type="text/javascript" src="{{site.cdn}}{{site.version}}/quill.table.load.js"></script>
 
-      window.quillTable(quill)
-    </script>
-    <br><br>
+      <br><br>
     <div style="float: left; width: 48%;">
       <p>CURRENT DELTA: <a href='#' onclick="quill.setContents(JSON.parse(document.getElementById('output_delta').value));">reload</a></p>
       <textarea id='output_delta' style='width:100%; height:200px; padding: 3px;'></textarea>

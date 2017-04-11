@@ -45,6 +45,11 @@ class DummyContainer extends Container {
     super.replace(target)
   }
 
+  removeContainer() {
+    this.moveChildren(this.parent, this);
+    this.remove();
+  }
+
   insertBefore(blot, ref) {
     if (blot.statics.blotName == this.statics.blotName) {
       // this prevents inserting two containers recursively, instead we want them to join
@@ -62,6 +67,7 @@ class DummyContainer extends Container {
 
   optimize() {
     super.optimize();
+
 
     // // merge with my parent if I am a nested dummyContainer
     // // does not seem neccessary at the moment
@@ -85,6 +91,29 @@ class DummyContainer extends Container {
     }
   }
 
+  // deleteAt(index, length) {
+  //   console.log("deleteAt")
+  //   return super.deleteAt(index, length);
+  // }
+  //
+  // removeChild(child) {
+  //   console.log("removeChild")
+  //   return super.removeChild(child);
+  // }
+  // replaceWith(name, value) {
+  //   console.log("replaceWith")
+  //   return super.replaceWith(name, value);
+  // }
+  //
+  // remove() {
+  //   console.log("remove")
+  //   return super.remove();
+  // }
+  //
+  // detach() {
+  //   console.log("detach")
+  //   return super.detach()
+  // }
 }
 
 DummyContainer.blotName = 'dummy-container';

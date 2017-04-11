@@ -32,12 +32,12 @@ window.quill = new Quill('#editor', {
 let delta = {
   "ops": [
     {"insert": "Toto je v podminenem bloku "},
-    {"insert": "\n", "attributes": {"dummyContainer": "condition"}},
+    {"insert": "\n", "attributes": {"dummy-container": "condition"}},
     {"insert": " a tohle taky."},
-    {"insert": "\n", "attributes": {"dummyContainer": "condition"}},
+    {"insert": "\n", "attributes": {"dummy-container": "condition"}},
     {"insert": "\n"},
     {"insert": " Ted mam otevreny command dummyContainer a jak pisu dal, tak se to porad vklada."},
-    {"insert": "\n", "attributes": {"dummyContainer": "condition"}},
+    {"insert": "\n", "attributes": {"dummy-container": "condition"}},
   ]
 };
 

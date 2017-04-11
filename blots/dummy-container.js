@@ -12,21 +12,22 @@ class DummyContainer extends Container {
   static create(value) {
     let tagName = 'dummyContainer';
     let node = super.create(tagName);
+
     if (value == true) {
-      value = this.randomId();
+      value = { id: this.randomId(), type: 'condition' }
     }
-    node.setAttribute('id', value);
+
+    node.setAttribute('type', value.type)
+    node.setAttribute('id', value.id)
     return node;
   }
 
   // this is here just to monitor behaviour
   format(name, value) {
-    console.log('name: ' + name + ' value: ' + value);
     return super.format(name, value)
   }
 
   formatAt(index, length, name, value) {
-    console.log("formatAt ", index, length, name, value)
     if (name == 'dummyContainer') {
       // this prevents dummyContainer from nested containers behaviour (list)
       return
@@ -62,7 +63,7 @@ class DummyContainer extends Container {
 
   formats() {
     // correct delta generation
-    return { [this.statics.blotName]: this.domNode.getAttribute('id') }
+    return { [this.statics.blotName]: { type: this.domNode.getAttribute('type'), id: this.domNode.getAttribute('id') } }
   }
 
   optimize() {

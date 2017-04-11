@@ -32,12 +32,12 @@ window.quill = new Quill('#editor', {
 let delta = {
   "ops": [
     {"insert": "Toto je v podminenem bloku "},
-    {"insert": "\n", "attributes": {"dummy-container": "condition"}},
+    {"insert": "\n", "attributes": {"dummy-container": { "type": "condition", "id": "abcd123"}}},
     {"insert": " a tohle taky."},
-    {"insert": "\n", "attributes": {"dummy-container": "condition"}},
+    {"insert": "\n", "attributes": {"dummy-container": { "type": "condition", "id": "abcd123"}}},
     {"insert": "\n"},
     {"insert": " Ted mam otevreny command dummyContainer a jak pisu dal, tak se to porad vklada."},
-    {"insert": "\n", "attributes": {"dummy-container": "condition"}},
+    {"insert": "\n", "attributes": {"dummy-container": { "type": "condition", "id": "xyzz444"}}},
   ]
 };
 
@@ -48,7 +48,7 @@ setInterval(
     document.getElementById(
       'output_delta'
     ).value = stringify(quill.editor.getDelta(), {
-      maxLength: 80,
+      maxLength: 110,
       indent: 2,
     });
   },

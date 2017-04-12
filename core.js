@@ -9,8 +9,7 @@ import Embed from './blots/embed';
 import Inline from './blots/inline';
 import Scroll from './blots/scroll';
 import TextBlot from './blots/text';
-
-import DummyContainer from './blots/dummy-container';
+import Nested from './blots/nested';
 
 import Clipboard from './modules/clipboard';
 import History from './modules/history';
@@ -26,8 +25,7 @@ Quill.register({
   'blots/inline'       : Inline,
   'blots/scroll'       : Scroll,
   'blots/text'         : TextBlot,
-
-  'blots/dummyContainer': DummyContainer,
+  'blots/nested'       : Nested,
 
   'modules/clipboard'  : Clipboard,
   'modules/history'    : History,

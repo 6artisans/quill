@@ -4,7 +4,7 @@ import Block, { BlockEmbed } from './block';
 import TextBlot from './text';
 import List from '../formats/list';
 
-class DummyContainer extends Container {
+class Nested extends Container {
   static randomId() {
     return Math.random().toString(36).slice(2);
   }
@@ -21,8 +21,8 @@ class DummyContainer extends Container {
   }
 
   static compare(self, other) {
-    let selfIndex = DummyContainer.order.indexOf(self);
-    let otherIndex = DummyContainer.order.indexOf(other);
+    let selfIndex = Nested.order.indexOf(self);
+    let otherIndex = Nested.order.indexOf(other);
     if (selfIndex >= 0 || otherIndex >= 0) {
       return selfIndex - otherIndex;
     } else if (self === other) {
@@ -34,17 +34,17 @@ class DummyContainer extends Container {
     }
   }
 
+  static isNestable(name) {
+    return !!Nested.order.find((x) => x == name)
+  }
+
   // this is here just to monitor behaviour
   format(name, value) {
     return super.format(name, value)
   }
 
-  isNestable(name) {
-    return name == 'dummy-container'
-  }
-
   formatAt(index, length, name, value) {
-    if (this.isNestable(name)) {
+    if (Nested.isNestable(name)) {
       // this prevents dummyContainer from nested containers behaviour (list)
       return
     } else {
@@ -85,8 +85,8 @@ class DummyContainer extends Container {
   optimize() {
     super.optimize();
 
-    if (this.parent instanceof DummyContainer &&
-        DummyContainer.compare(this.statics.blotName, this.parent.statics.blotName) > 0) {
+    if (this.parent instanceof Nested &&
+        Nested.compare(this.statics.blotName, this.parent.statics.blotName) > 0) {
       let parent = this.parent.isolate(this.offset(), this.length());
       this.moveChildren(parent);
       parent.wrap(this);
@@ -94,11 +94,11 @@ class DummyContainer extends Container {
   }
 }
 
-DummyContainer.blotName = 'dummy-container';
-DummyContainer.tagName = 'dummy-container';
-DummyContainer.scope = Parchment.Scope.BLOCK_BLOT;
-DummyContainer.defaultChild = 'block';
-DummyContainer.allowedChildren = [Block, BlockEmbed, TextBlot, List, DummyContainer];
-DummyContainer.order = ['condition', 'locked']; // first is the lowest, last is the highest
+Nested.blotName = 'dummy-container';
+Nested.tagName = 'dummy-container';
+Nested.scope = Parchment.Scope.BLOCK_BLOT;
+Nested.defaultChild = 'block';
+Nested.allowedChildren = [Block, BlockEmbed, TextBlot, List, Nested];
+Nested.order = ['condition', 'locked']; // first is the lowest, last is the highest
 
-export default DummyContainer;
+export default Nested;

@@ -1,10 +1,6 @@
-import DummyContainer from './dummy-container';
+import Nested from './nested';
 
-class Locked extends DummyContainer {
-
-  isNestable(name) {
-    return super.isNestable() && name == 'locked'
-  }
+class Locked extends Nested {
 
   optimize() {
     super.optimize();
@@ -21,7 +17,6 @@ class Locked extends DummyContainer {
       next.remove();
     }
   }
-
 }
 
 Locked.blotName = 'locked';

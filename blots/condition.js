@@ -1,10 +1,6 @@
-import DummyContainer from './dummy-container';
+import Nested from './nested';
 
-class Condition extends DummyContainer {
-
-  isNestable(name) {
-    return super.isNestable() && name == 'condition'
-  }
+class Condition extends Nested {
 
   optimize() {
     super.optimize();
@@ -21,7 +17,6 @@ class Condition extends DummyContainer {
       next.remove();
     }
   }
-
 }
 
 Condition.blotName = 'condition';

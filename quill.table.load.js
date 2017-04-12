@@ -19,7 +19,7 @@ let toolbarOptions = [
   [{ 'align': [] }],
 
   ['clean'],                                         // remove formatting button
-  ['dummy-container']
+  ['locked', 'condition']
 ];
 
 window.quill = new Quill('#editor', {
@@ -32,12 +32,12 @@ window.quill = new Quill('#editor', {
 let delta = {
   "ops": [
     {"insert": "Toto je v podminenem bloku "},
-    {"insert": "\n", "attributes": {"dummy-container": { "type": "condition", "id": "abcd123"}}},
+    {"insert": "\n", "attributes": {"condition": { "id": "abcd123"}}},
     {"insert": " a tohle taky."},
-    {"insert": "\n", "attributes": {"dummy-container": { "type": "condition", "id": "abcd123"}}},
+    {"insert": "\n", "attributes": {"condition": { "id": "abcd123"}}},
     {"insert": "\n"},
     {"insert": " Ted mam otevreny command dummyContainer a jak pisu dal, tak se to porad vklada."},
-    {"insert": "\n", "attributes": {"dummy-container": { "type": "condition", "id": "xyzz444"}}},
+    {"insert": "\n", "attributes": {"condition": { "id": "xyzz444"}}},
   ]
 };
 

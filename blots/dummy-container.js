@@ -10,14 +10,12 @@ class DummyContainer extends Container {
   }
 
   static create(value) {
-    let tagName = 'dummyContainer';
-    let node = super.create(tagName);
+    let node = super.create(this.tagName);
 
     if (value == true) {
-      value = { id: this.randomId(), type: 'condition' }
+      value = { id: this.randomId() }
     }
 
-    node.setAttribute('type', value.type)
     node.setAttribute('id', value.id)
     return node;
   }
@@ -27,8 +25,12 @@ class DummyContainer extends Container {
     return super.format(name, value)
   }
 
+  isNestable(name) {
+    return name == 'dummyContainer'
+  }
+
   formatAt(index, length, name, value) {
-    if (name == 'dummyContainer') {
+    if (this.isNestable(name)) {
       // this prevents dummyContainer from nested containers behaviour (list)
       return
     } else {
@@ -63,64 +65,15 @@ class DummyContainer extends Container {
 
   formats() {
     // correct delta generation
-    return { [this.statics.blotName]: { type: this.domNode.getAttribute('type'), id: this.domNode.getAttribute('id') } }
+    return { [this.statics.blotName]: { id: this.domNode.getAttribute('id') } }
   }
 
-  optimize() {
-    super.optimize();
-
-
-    // // merge with my parent if I am a nested dummyContainer
-    // // does not seem neccessary at the moment
-    // let parent = this.parent;
-    // if (parent != null && parent.statics.blotName == 'dummyContainer') {
-    //   // we will mark td position, put in table and replace mark
-    //   this.moveChildren(parent)
-    //   this.remove()
-    // }
-
-    // merge two consecutive containers
-    // by our definition, there must be a divider between containers
-    let next = this.next;
-    if (next != null && next.prev === this &&
-        next.statics.blotName === this.statics.blotName &&
-        next.domNode.tagName === this.domNode.tagName &&
-        // we merge only containers with the same id (not used yet)
-        next.domNode.getAttribute('id') === this.domNode.getAttribute('id')) {
-      next.moveChildren(this);
-      next.remove();
-    }
-  }
-
-  // deleteAt(index, length) {
-  //   console.log("deleteAt")
-  //   return super.deleteAt(index, length);
-  // }
-  //
-  // removeChild(child) {
-  //   console.log("removeChild")
-  //   return super.removeChild(child);
-  // }
-  // replaceWith(name, value) {
-  //   console.log("replaceWith")
-  //   return super.replaceWith(name, value);
-  // }
-  //
-  // remove() {
-  //   console.log("remove")
-  //   return super.remove();
-  // }
-  //
-  // detach() {
-  //   console.log("detach")
-  //   return super.detach()
-  // }
 }
 
 DummyContainer.blotName = 'dummy-container';
 DummyContainer.tagName = 'dummy-container';
 DummyContainer.scope = Parchment.Scope.BLOCK_BLOT;
 DummyContainer.defaultChild = 'block';
-DummyContainer.allowedChildren = [Block, BlockEmbed, TextBlot, List];
+DummyContainer.allowedChildren = [Block, BlockEmbed, TextBlot, List, DummyContainer];
 
 export default DummyContainer;

@@ -151,7 +151,7 @@ class Quill {
       let change = new Delta();
       if (range == null) {
         return change;
-      } else if (name == 'dummy-container' && value == false) {
+      } else if ((name == 'condition' || name == 'locked') && value == false) { // TODO do not list all objects here!
         // I am always in a container child = BlockBlot AND I am removing the container (value==false)
         let currentBlock = this.scroll.line(range.index)[0]  // first item is element, the second seems to be a column???
         currentBlock.parent.removeContainer()

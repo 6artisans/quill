@@ -156,7 +156,6 @@ class Quill {
         // I am always in a container child = BlockBlot AND I am removing the container (value==false)
         let currentBlock = this.scroll.line(range.index)[0]  // first item is element, the second seems to be a column???
         this.findParentByName(currentBlock, name).removeContainer()
-        return change;
       } else if (Parchment.query(name, Parchment.Scope.BLOCK)) {
         change = this.editor.formatLine(range.index, range.length, { [name]: value });
       } else if (range.length === 0) {

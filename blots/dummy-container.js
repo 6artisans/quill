@@ -20,6 +20,20 @@ class DummyContainer extends Container {
     return node;
   }
 
+  static compare(self, other) {
+    let selfIndex = DummyContainer.order.indexOf(self);
+    let otherIndex = DummyContainer.order.indexOf(other);
+    if (selfIndex >= 0 || otherIndex >= 0) {
+      return selfIndex - otherIndex;
+    } else if (self === other) {
+      return 0;
+    } else if (self < other) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+
   // this is here just to monitor behaviour
   format(name, value) {
     return super.format(name, value)
@@ -68,6 +82,16 @@ class DummyContainer extends Container {
     return { [this.statics.blotName]: { id: this.domNode.getAttribute('id') } }
   }
 
+  optimize() {
+    super.optimize();
+
+    if (this.parent instanceof DummyContainer &&
+        DummyContainer.compare(this.statics.blotName, this.parent.statics.blotName) > 0) {
+      let parent = this.parent.isolate(this.offset(), this.length());
+      this.moveChildren(parent);
+      parent.wrap(this);
+    }
+  }
 }
 
 DummyContainer.blotName = 'dummy-container';
@@ -75,5 +99,6 @@ DummyContainer.tagName = 'dummy-container';
 DummyContainer.scope = Parchment.Scope.BLOCK_BLOT;
 DummyContainer.defaultChild = 'block';
 DummyContainer.allowedChildren = [Block, BlockEmbed, TextBlot, List, DummyContainer];
+DummyContainer.order = ['condition', 'locked']; // first is the lowest, last is the highest
 
 export default DummyContainer;

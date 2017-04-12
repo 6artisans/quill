@@ -26,7 +26,7 @@ class DummyContainer extends Container {
   }
 
   isNestable(name) {
-    return name == 'dummyContainer'
+    return name == 'dummy-container'
   }
 
   formatAt(index, length, name, value) {

@@ -2,14 +2,8 @@ import DummyContainer from './dummy-container';
 
 class Locked extends DummyContainer {
 
-  static create(value) {
-    let node = super.create(this.tagName);
-    return node;
-  }
-
-  formats() {
-    // correct delta generation
-    return { [this.statics.blotName]: true }
+  isNestable(name) {
+    return super.isNestable() && name == 'locked'
   }
 
   optimize() {
@@ -20,11 +14,14 @@ class Locked extends DummyContainer {
     let next = this.next;
     if (next != null && next.prev === this &&
         next.statics.blotName === this.statics.blotName &&
-        next.domNode.tagName === this.domNode.tagName) {
+        next.domNode.tagName === this.domNode.tagName &&
+        // we merge only containers with the same id (not used yet)
+        next.domNode.getAttribute('id') === this.domNode.getAttribute('id')) {
       next.moveChildren(this);
       next.remove();
     }
   }
+
 }
 
 Locked.blotName = 'locked';

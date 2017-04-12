@@ -18,6 +18,8 @@ let toolbarOptions = [
   [{ 'font': [] }],
   [{ 'align': [] }],
 
+  ['link'],
+
   ['clean'],                                         // remove formatting button
   ['locked', 'condition']
 ];

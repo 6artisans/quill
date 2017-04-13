@@ -73,7 +73,11 @@ class Nested extends Container {
 
   formats() {
     // correct delta generation
-    return { [this.statics.blotName]: { id: this.domNode.getAttribute('id') } }
+    let attributes = {}
+    for(let i = 0; i < this.domNode.attributes.length; i++) {
+      attributes[this.domNode.attributes[i].name] = this.domNode.attributes[i].value
+    }
+    return { [this.statics.blotName]: attributes }
   }
 
   optimize() {

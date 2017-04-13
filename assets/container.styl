@@ -1,2 +1,20 @@
-.ql-dummy-container:after
+.ql-condition:after
   content: "IF"
+
+.ql-locked:after
+  content: "🔒"
+
+.ql-active.ql-locked:after
+  content: "🔓"
+
+condition, locked
+  display: block
+
+condition
+  background-color: #dfd
+
+locked
+  background-color: #fdd
+
+locked > condition
+  background-color: #ffc

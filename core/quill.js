@@ -8,6 +8,7 @@ import Selection, { Range } from './selection';
 import extend from 'extend';
 import logger from './logger';
 import Theme from './theme';
+import Nested from '../blots/nested'
 
 let debug = logger('quill');
 
@@ -151,11 +152,10 @@ class Quill {
       let change = new Delta();
       if (range == null) {
         return change;
-      } else if (name == 'dummy-container' && value == false) {
+      } else if (Nested.isNestable(name) && value == false) {
         // I am always in a container child = BlockBlot AND I am removing the container (value==false)
         let currentBlock = this.scroll.line(range.index)[0]  // first item is element, the second seems to be a column???
-        currentBlock.parent.removeContainer()
-        return change;
+        this.findParentByName(currentBlock, name).removeContainer()
       } else if (Parchment.query(name, Parchment.Scope.BLOCK)) {
         change = this.editor.formatLine(range.index, range.length, { [name]: value });
       } else if (range.length === 0) {
@@ -167,6 +167,16 @@ class Quill {
       this.setSelection(range, Emitter.sources.SILENT);
       return change;
     }, source);
+  }
+
+  findParentByName(node, name) {
+    let current = node;
+    while(current) {
+      if (current.statics.blotName === name) {
+        return current;
+      }
+      current = current.parent;
+    }
   }
 
   formatLine(index, length, name, value, source) {

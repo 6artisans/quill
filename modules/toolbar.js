@@ -253,7 +253,14 @@ Toolbar.DEFAULTS = {
       } else {
         this.quill.format('list', value, Quill.sources.USER);
       }
+    },
+    condition: function(value){
+      if (value === true) {
+        value = prompt('Variable:');
+      }
+      this.quill.format('condition', value, Quill.sources.USER);
     }
+
   }
 }
 

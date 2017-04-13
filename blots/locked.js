@@ -10,9 +10,7 @@ class Locked extends Nested {
     let next = this.next;
     if (next != null && next.prev === this &&
         next.statics.blotName === this.statics.blotName &&
-        next.domNode.tagName === this.domNode.tagName &&
-        // we merge only containers with the same id (not used yet)
-        next.domNode.getAttribute('id') === this.domNode.getAttribute('id')) {
+        next.domNode.tagName === this.domNode.tagName) {
       next.moveChildren(this);
       next.remove();
     }

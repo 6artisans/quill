@@ -2,6 +2,18 @@ import Nested from './nested';
 
 class Condition extends Nested {
 
+  create(value) {
+    let node = super.create(value)
+
+    // we get called with true on create, otherwise it is replay of delta
+    if (value == true) {
+      value = { id: this.randomId() }
+    }
+
+    node.setAttribute('id', value.id)
+    return node
+  }
+
   optimize() {
     super.optimize();
 

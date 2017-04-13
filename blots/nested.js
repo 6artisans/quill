@@ -11,12 +11,6 @@ class Nested extends Container {
 
   static create(value) {
     let node = super.create(this.tagName);
-
-    if (value == true) {
-      value = { id: this.randomId() }
-    }
-
-    node.setAttribute('id', value.id)
     return node;
   }
 

@@ -2,6 +2,13 @@ import Nested from './nested';
 
 class Locked extends Nested {
 
+  static create(value) {
+    let node = super.create(this.tagName);
+
+    node.setAttribute('contenteditable', false)
+    return node;
+  }
+
   optimize() {
     super.optimize();
 

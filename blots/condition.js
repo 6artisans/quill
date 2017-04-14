@@ -7,10 +7,9 @@ class Condition extends Nested {
 
     // we get called with true on create, otherwise it is replay of delta
     if (typeof value === 'string') {
-      value = { id: this.randomId(), name: value }
+      value = { name: value }
     }
 
-    node.setAttribute('id', value.id)
     node.setAttribute('name', value.name)
     return node
   }
@@ -24,8 +23,7 @@ class Condition extends Nested {
     if (next != null && next.prev === this &&
         next.statics.blotName === this.statics.blotName &&
         next.domNode.tagName === this.domNode.tagName &&
-        // we merge only containers with the same id (not used yet)
-        next.domNode.getAttribute('id') === this.domNode.getAttribute('id')) {
+        next.domNode.getAttribute('name') === this.domNode.getAttribute('name')) {
       next.moveChildren(this);
       next.remove();
     }

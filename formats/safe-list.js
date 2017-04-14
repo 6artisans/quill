@@ -43,7 +43,11 @@ class SafeList extends List {
     if (value === 'checked' || value === 'unchecked') {
       node.setAttribute('data-checked', value === 'checked');
     }
+<<<<<<< HEAD
     node.setAttribute('mask', '#.#.@')
+=======
+    node.setAttribute('pattern', '#.#.@')
+>>>>>>> origin/feature/safelist
     return node;
   }
 

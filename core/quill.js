@@ -9,6 +9,7 @@ import extend from 'extend';
 import logger from './logger';
 import Theme from './theme';
 import Nested from '../blots/nested'
+import Numbering from '../modules/numbering'
 
 let debug = logger('quill');
 
@@ -74,6 +75,7 @@ class Quill {
     this.root.classList.add('ql-blank');
     this.scrollingContainer = this.options.scrollingContainer || this.root;
     this.emitter = new Emitter();
+    this.numbering = new Numbering(this);
     this.scroll = Parchment.create(this.root, {
       emitter: this.emitter,
       scrollingContainer: this.scrollingContainer,

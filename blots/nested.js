@@ -29,11 +29,6 @@ class Nested extends Container {
     return !!Nested.order.find((x) => x == name)
   }
 
-  // this is here just to monitor behaviour
-  format(name, value) {
-    return super.format(name, value)
-  }
-
   formatAt(index, length, name, value) {
     if (Nested.isNestable(name)) {
       // this prevents dummyContainer from nested containers behaviour (list)

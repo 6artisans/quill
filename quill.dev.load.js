@@ -21,7 +21,7 @@ let toolbarOptions = [
   ['link'],
 
   ['clean'],                                         // remove formatting button
-  ['locked', 'condition']
+  ['locked', 'condition', 'safe-list']
 ];
 
 window.quill = new Quill('#editor', {

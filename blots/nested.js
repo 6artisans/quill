@@ -5,9 +5,6 @@ import TextBlot from './text';
 import List from '../formats/list';
 
 class Nested extends Container {
-  static randomId() {
-    return Math.random().toString(36).slice(2);
-  }
 
   static create(value) {
     let node = super.create(this.tagName);

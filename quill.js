@@ -7,6 +7,7 @@ import { IndentClass as Indent } from './formats/indent';
 import Blockquote from './formats/blockquote';
 import Header from './formats/header';
 import List, { ListItem } from './formats/list';
+import SafeList, { SafeListItem } from './formats/safe-list';
 
 import { BackgroundClass, BackgroundStyle } from './formats/background';
 import { ColorClass, ColorStyle } from './formats/color';
@@ -75,6 +76,7 @@ Quill.register({
   'formats/code-block': CodeBlock,
   'formats/header': Header,
   'formats/list': List,
+  'formats/safe-list': SafeList,
   'formats/condition': Condition,
   'formats/locked': Locked,
 
@@ -90,6 +92,7 @@ Quill.register({
   'formats/video': Video,
 
   'formats/list/item': ListItem,
+  'formats/safe-list/item': SafeListItem,
 
   'modules/formula': Formula,
   'modules/syntax': Syntax,

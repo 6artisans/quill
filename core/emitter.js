@@ -22,7 +22,8 @@ Emitter.events = {
   SCROLL_OPTIMIZE      : 'scroll-optimize',
   SCROLL_UPDATE        : 'scroll-update',
   SELECTION_CHANGE     : 'selection-change',
-  TEXT_CHANGE          : 'text-change'
+  TEXT_CHANGE          : 'text-change',
+  SAFE_LIST_CHANGE     : 'safe-list-change'
 };
 Emitter.sources = {
   API    : 'api',

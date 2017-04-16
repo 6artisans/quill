@@ -51,6 +51,14 @@ SnowTheme.DEFAULTS = extend(true, {}, BaseTheme.DEFAULTS, {
           } else {
             this.quill.format('link', false);
           }
+        },
+        condition: function(value) {
+          if (value) {
+            let tooltip = this.quill.theme.tooltip;
+            tooltip.edit('condition', '');
+          } else {
+            this.quill.format('condition', false);
+          }
         }
       }
     }

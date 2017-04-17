@@ -68,6 +68,14 @@ class Nested extends Container {
     return { [this.statics.blotName]: attributes }
   }
 
+  static formats(domNode) {
+    let attributes = {}
+    for(let i = 0; i < domNode.attributes.length; i++) {
+      attributes[domNode.attributes[i].name] = domNode.attributes[i].value
+    }
+    return attributes
+  }
+
   optimize() {
     super.optimize();
 

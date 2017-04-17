@@ -34,15 +34,6 @@ class Nested extends Container {
     return super.format(name, value)
   }
 
-  formatAt(index, length, name, value) {
-    if (Nested.isNestable(name)) {
-      // this prevents dummyContainer from nested containers behaviour (list)
-      return
-    } else {
-      return super.formatAt(index, length, name, value)
-    }
-  }
-
   // correct delta generation
   replace(target) {
     let item = Parchment.create(this.statics.defaultChild);

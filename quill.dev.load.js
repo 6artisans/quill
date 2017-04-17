@@ -34,7 +34,7 @@ window.quill = new Quill('#editor', {
 let delta = {
   "ops": [
     {"insert": "Toto je v podminenem bloku "},
-    {"insert": "\n", "attributes": {"condition": { "id": "abcd123", "name": "variable1"}}},
+    {"insert": "\n", "attributes": {"condition": { "id": "abcd123", "name": "variable1"}, "locked": {"contenteditable": "false"}}},
     {"insert": " a tohle taky."},
     {"insert": "\n", "attributes": {"condition": { "id": "abcd123", "name": "variable1"}}},
     {"insert": "\n"},

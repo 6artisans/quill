@@ -234,6 +234,13 @@ class BaseTooltip extends Tooltip {
         }
         break;
       }
+      case 'condition': {
+        let scrollTop = this.quill.root.scrollTop;
+        this.restoreFocus();
+        this.quill.format('condition', value, Emitter.sources.USER);
+        this.quill.root.scrollTop = scrollTop;
+        break;
+      }
       default:
     }
     this.textbox.value = '';

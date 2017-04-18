@@ -12,14 +12,16 @@ class Numbering {
     })
   }
 
+  // recalculates all list numbers in the document once
   recalculate() {
     this.numbers = {}
     this.calculate(this.quill.editor.scroll)
   }
 
-  calculate(node, state) {
+  // calculates correct numbers for a given node and his children
+  calculate(node) {
     if (node.isNumbered && node.isNumbered()) {
-      this.incrementNumbering(node);
+      const nodeNumber = this.incrementNumbering(node.mask());
     }
 
     (node.children || []).forEach((child) => {
@@ -27,49 +29,80 @@ class Numbering {
     });
   }
 
-  incrementNumbering(node) {
-    let normalizedMask = this.removeSeparators(node.mask())
-    let masks = normalizedMask.split('')
-    let numbers = this.numbers[normalizedMask]
+  // increments numbering for a given node
+  incrementNumbering(nodeMask) {
+    let normalizedMasks = this.removeSeparators(nodeMask).split('')
+    let result = [];
+    let searchIndex = [];
+    let value;
 
-    this.numbers[normalizedMask] = this.increase(numbers, masks)
-    console.log(node)
-    console.log(normalizedMask)
-    console.log(this.numbers[normalizedMask])
-  }
+    // we iterate across all levels of the number, e.g. 4 levels for 1.2.3.4
+    // and we store numbers with following indices - for mask #.#.# we do:
+    //    level 1: numbers[['#']] = 1
+    //    level 2: numbers[[1, '#']] = 1
+    //    level 3: numbers[[1, 1, '#']] = 1
+    for (let i = 0; i < normalizedMasks.length; i++) {
+      if (value) {
+        // push previous value to the index
+        searchIndex.push(value)
+      }
 
-  // normalizedValue = [1, 1, 'a']
-  // normalizedMask = ['#', '#', '@']
-  increase(normalizedValue, normalizedMask) {
-    if (!normalizedValue) {
-      normalizedValue = []
+      // we temporarily put single digit mask on the end of searchIndex
+      searchIndex.push(normalizedMasks[i])
+
+      if (i == normalizedMasks.length - 1) {
+        // it is a last item which needs to be incremented
+
+        if (this.numbers[searchIndex]) {
+          // existing number - we just increment it
+          value = this.incrementPosition(this.numbers[searchIndex])
+        } else {
+          // this number does not exist, we initialize a new one
+          value = this.initializePosition(normalizedMasks[i])
+        }
+      } else {
+        // if it does not exist, it means it is a user error and he uses 1.1.1 before 1.1,
+        // so we initialize it anyways
+        value = this.numbers[searchIndex] || this.initializePosition(normalizedMasks[i])
+      }
+
+      // we store the corresponding level value in numbers
+      this.numbers[searchIndex] = value
+
+      // we create complete value across all levels
+      result.push(value)
+
+      // we remove the generic mask from searchIndex
+      searchIndex.pop()
     }
-    const lastChar = normalizedMask[normalizedMask.length - 1]
-    const lastValue = normalizedValue[normalizedValue.length - 1]
-    const result = normalizedValue.slice(0, normalizedValue.length - 1)
-    let incrementedLastValue;
 
-    if (lastChar === '#') {
-      incrementedLastValue = (lastValue || 0) + 1
-    } else if (lastChar === '@'){
-      const defaultValue = this.incrementCharacter('a', -1)
-      incrementedLastValue = this.incrementCharacter(lastValue || defaultValue, 1)
-    } else {
-      throw new Error("Error, invalid mask " + normalizedMask)
-    }
-
-    result.push(incrementedLastValue)
     return result
   }
 
-  incrementCharacter(char, offset) {
-    return String.fromCharCode(char.charCodeAt(0) + offset)
+  // initializes a new digit based on mask: 1 for # and 'a' for @
+  initializePosition(maskChar) {
+    if (maskChar === '#') {
+      return 1
+    } else if (maskChar === '@') {
+      return 'a'
+    } else {
+      throw new Error("Error, invalid mask " + maskChar)
+    }
   }
 
+  // increments a single position, e.g.: incrementPosition(3, '#') -> 4
+  incrementPosition(value) {
+    if (typeof value == 'string') {
+      return String.fromCharCode(value.charCodeAt(value) + 1)
+    } else {
+      return value + 1
+    }
+  }
+
+  // removes possible separators from mask (')', '.')
   removeSeparators(str) {
-    return str.replace(/[,)]/gi, '');
+    return str.replace(/[\.)]/gi, '');
   }
-
 
 }
 

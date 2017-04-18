@@ -14,7 +14,6 @@ class SafeListItem extends ListItem {
   // fire a safe list change event, so we can compute numbers of items
   attach() {
     super.attach()
-    console.log(this.parent)
     quill.emitter.emit(Emitter.events.SAFE_LIST_CHANGE)
   }
 
@@ -33,8 +32,8 @@ class SafeListItem extends ListItem {
   }
 }
 
-ListItem.blotName = 'safe-list-item';
-ListItem.tagName = 'safelistitem';
+SafeListItem.blotName = 'safe-list-item';
+SafeListItem.tagName = 'safelistitem';
 
 
 class SafeList extends List {
@@ -51,11 +50,11 @@ class SafeList extends List {
     return 'ordered';
   }
 }
-List.blotName = 'safe-list';
-List.scope = Parchment.Scope.BLOCK_BLOT;
-List.tagName = 'safelist';
-List.defaultChild = 'safe-list-item';
-List.allowedChildren = [SafeListItem];
+SafeList.blotName = 'safe-list';
+SafeList.scope = Parchment.Scope.BLOCK_BLOT;
+SafeList.tagName = 'safelist';
+SafeList.defaultChild = 'safe-list-item';
+SafeList.allowedChildren = [SafeListItem];
 
 
 export { SafeListItem, SafeList as default };

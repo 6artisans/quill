@@ -27,9 +27,6 @@ class SafeListItem extends ListItem {
     return true
   }
 
-  mask() {
-    return '@.@.@'
-  }
 }
 
 SafeListItem.blotName = 'safe-list-item';
@@ -48,6 +45,10 @@ class SafeList extends List {
 
   static formats(domNode) {
     return 'ordered';
+  }
+
+  mask() {
+    return this.domNode.getAttribute('mask')
   }
 }
 SafeList.blotName = 'safe-list';

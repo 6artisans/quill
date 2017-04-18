@@ -20,8 +20,10 @@ class Numbering {
 
   // calculates correct numbers for a given node and his children
   calculate(node) {
+    console.log(node, children)
     if (node.isNumbered && node.isNumbered()) {
-      const nodeNumber = this.incrementNumbering(node.mask());
+      const nodeNumber = this.incrementNumbering(node.parent.mask());
+      node.domNode.setAttribute('number', nodeNumber)
     }
 
     (node.children || []).forEach((child) => {

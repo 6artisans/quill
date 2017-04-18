@@ -76,7 +76,7 @@ class Numbering {
       searchIndex.pop()
     }
 
-    return result
+    return this.wrapInSeparators(result, nodeMask)
   }
 
   // initializes a new digit based on mask: 1 for # and 'a' for @
@@ -101,7 +101,18 @@ class Numbering {
 
   // removes possible separators from mask (')', '.')
   removeSeparators(str) {
-    return str.replace(/[\.)]/gi, '');
+    return str.replace(/[^#^@]/gi, '');
+  }
+
+  // put all the separators back
+  wrapInSeparators(values, mask) {
+    const separators = mask.split(/[#@]/)
+    let result = [separators[0]]
+    for (let i = 0; i < values.length; i++) {
+      result.push(values[i])
+      result.push(separators[i + 1])
+    }
+    return result.join('')
   }
 
 }

@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Designing the Delta Format - Quill</title>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="language" content="english">
+<meta name="viewport" content="width=device-width">
+
+<meta name="description" content="Quill is a free, open source WYSIWYG editor built for the modern web. With its modular architecture and expressive API, it is completely customizable to fit any need.">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@quilljs">
+
+<meta name="twitter:title" content="Designing the Delta Format - Quill">
+
+<meta name="twitter:description" content="Quill is a free, open source WYSIWYG editor built for the modern web.">
+<meta name="twitter:image" content="http://quilljs.com/assets/images/brand-asset.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://quilljs.com/guides/designing-the-delta-format/">
+<meta property="og:image" content="http://quilljs.com/assets/images/brand-asset.png">
+<meta property="og:title" content="Designing the Delta Format - Quill">
+<meta property="og:site_name" content="Quill">
+<link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+<link type="application/atom+xml" rel="alternate" href="https://quilljs.com/feed.xml" title="Quill - Your powerful, rich text editor" />
+    <link rel="stylesheet" href="/assets/css/base.css">
+    
+    
+      
+      
+    
+      
+      
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css">
+      
+    
+      
+      
+    
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-19077541-2', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+  window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(r?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","removeEventProperty","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
+  heap.load("1135832181");
+</script>
+  </head>
+  <body>
+    <header>
+  <nav class="navbar-drop">
+    <button class="navbar-close"></button>
+    <ul>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/docs/quickstart/">Documentation</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/guides/why-quill/">Guides</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/playground/">Playground</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/blog/">Blog</a>
+      </li>
+      <li class="navbar-item">
+        <span class="github-button dark-bg">
+  <a class="github-action" target="_blank" title="Star Quill on Github" href="https://github.com/quilljs/quill/">
+    <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.3 6.53 5.47 7.6.4.06.55-.18.55-.4 0-.18 0-.8 0-1.48-2.02.37-2.54-.5-2.7-.94-.1-.23-.48-.94-.82-1.13-.28-.15-.68-.52 0-.53.62 0 1.07.58 1.22.82.72 1.2 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.77-.2-3.63-.9-3.63-3.95 0-.87.3-1.6.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.2 2.2.83.64-.18 1.32-.27 2-.27.68 0 1.36.1 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.93.08 2.13.5.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.3.25.54.73.54 1.48 0 1.08 0 1.94 0 2.2 0 .22.15.47.55.4C13.7 14.52 16 11.52 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    <span>Star</span>
+  </a>
+  <a class="github-count" target="_blank" title="Quill Stargazers" href="https://github.com/quilljs/quill/stargazers">8,000</a>
+</span>
+      </li>
+    </ul>
+  </nav>
+  <nav class="container">
+    <ul class="navbar-list">
+      <li class="navbar-item">
+        <a class="navbar-link" href="/docs/quickstart/">Documentation</a>
+      </li>
+      <li class="active navbar-item">
+        <a class="navbar-link" href="/guides/why-quill/">Guides</a>
+      </li>
+      <li class="logo-item">
+        <a class="logo" href="/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 942 559.9"><style type="text/css">.st0{fill:#1D1E30;}</style><circle cx="749" cy="125.5" r="25.7" class="st0"/><path d="M643.3 211.5c0 21.2 0 76.5 0 91.8 0 19.5-3.5 90.9-76.1 90.9-75.9 0-74.3-71.3-74.3-98.8 0-23.4 0-70.4 0-83.8h-39v94.1s-8.1 128.5 111.3 128.5c119.4 0 115.4-124.5 115.4-124.5v-98.2h-37.3zM816.5 45.2H855v378.5h-38.5zM504 472.7c-79.4 0-194.9-12-268.3-12.8-12.2 0-23 1.5-32.6 3.9l13-11.6c14.3-12.9 37.6-20.9 43.4-22 94.4-18.6 164.8-93.7 164.8-212.8C424.3 83.2 329.3 0 212.1 0S0 76.9 0 217.3c0 126.8 84.9 208 193.1 216.5 0 0 5.7.1 6.4 3.6.6 3.1-4.8 7.6-4.8 7.6l-64.4 59.6 12.4 13.4 23.8-21.3c13.3-10.6 35.1-23.6 62.1-23.6 89.3 0 188.2 89.1 280.1 86.9 134.4-3.2 165.7-93 169.1-104.6.2-.4-55.6 17.3-173.8 17.3zM39.4 217.3c0-114.3 77.3-177 172.8-177 95.4 0 172.8 67.7 172.8 177 0 112.6-77.3 177-172.8 177-95.5-.1-172.8-67.8-172.8-177zM903.5 45.2H942v378.5h-38.5zM729.5 211.1H768v212.5h-38.5z" class="st0"/></svg></a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/playground/">Playground</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/blog/">Blog</a>
+      </li>
+      <li class="download-item">
+        <a class="action" href="/docs/download/">Download</a>
+      </li>
+    </ul>
+  </nav>
+  <button class="navbar-open">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+    
+    
+      
+        
+        
+          
+        
+      
+    
+      
+        
+        
+      
+    
+      
+        
+        
+          
+          
+            <div id="docs-wrapper" class="container">
+  <div class="row">
+    <div id="sidebar-container" class="three columns">
+      <button class="sidebar-button">Document Navigation</button>
+      <ul class="sidebar-list">
+        <li class="search-item"><input type="text"></li>
+        
+<li>
+  <a href="/guides/why-quill/">Why Quill</a>
+  
+</li>
+
+<li>
+  <a href="/guides/how-to-customize-quill/">How to Customize Quill</a>
+  
+</li>
+
+<li>
+  <a href="/guides/adding-quill-to-your-build-pipeline/">Adding Quill to Your Build Pipeline</a>
+  
+</li>
+
+<li>
+  <a href="/guides/building-a-custom-module/">Building a Custom Module</a>
+  
+</li>
+
+<li>
+  <a href="/guides/cloning-medium-with-parchment/">Cloning Medium with Parchment</a>
+  
+</li>
+
+<li class="active">
+  <a href="/guides/designing-the-delta-format/">Designing the Delta Format</a>
+  
+</li>
+
+<li>
+  <a href="/guides/comparison-with-other-rich-text-editors/">Comparison with Other Rich Text Editors</a>
+  
+</li>
+
+<li>
+  <a href="/guides/upgrading-to-1-0/">Upgrading to 1.0</a>
+  
+</li>
+
+      </ul>
+    </div>
+    <div id="docs-container" class="nine columns">
+      <div class="row">
+        <span class="breadcrumb">
+          <span>Guides:</span>
+          <span>Designing the Delta Format</span>
+        </span>
+        <a class="edit-link" href="https://github.com/quilljs/quill/tree/develop/docs/guides/designing-the-delta-format.md" target="_blank" title="Edit on Github">
+          <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.3 6.53 5.47 7.6.4.06.55-.18.55-.4 0-.18 0-.8 0-1.48-2.02.37-2.54-.5-2.7-.94-.1-.23-.48-.94-.82-1.13-.28-.15-.68-.52 0-.53.62 0 1.07.58 1.22.82.72 1.2 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.77-.2-3.63-.9-3.63-3.95 0-.87.3-1.6.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.2 2.2.83.64-.18 1.32-.27 2-.27.68 0 1.36.1 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.93.08 2.13.5.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.3.25.54.73.54 1.48 0 1.08 0 1.94 0 2.2 0 .22.15.47.55.4C13.7 14.52 16 11.52 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          <span>Edit on Github</span>
+        </a>
+      </div>
+      <hr>
+      <div id="content-container">
+        
+        <h1 id="designing the delta format">Designing the Delta Format</h1>
+        <p>Rich text editors lack a specification to express its own contents. Until recently, most rich text editors did not even know what was in their own edit areas. These editors just pass the user HTML, along with the burden of parsing and interpretting this. At any given time, this interpretation will differ from those of major browser vendors, leading to different editing experiences for users.</p>
+
+<p>Quill is the first rich text editor to actually understand its own contents. Key to this is Deltas, the specification describing rich text. Deltas are designed to be easy to understand and use. We will walk through some of the thinking behind Deltas, to shed light on <em>why</em> things are the way they are.</p>
+
+<p>If you are looking for a reference on <em>what</em> Deltas are, the <a href="/docs/delta/">Delta documentation</a> is a more concise resource.</p>
+
+<h2 id="plain-text">Plain Text</h2>
+
+<p>Let’s start at the basics with just plain text. There already is a ubiquitous format to store plain text: the string. Now if we want to build upon this and describe formatted text, such as when a range is bold, we need to add additional information.</p>
+
+<p>Arrays are the only other ordered data type available, so we use an array of objects. This also allows us to leverage JSON for compatibility with a breadth of tools.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s1">'Hello'</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s1">'World'</span><span class="p">,</span> <span class="na">bold</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span>
+<span class="p">];</span>
+</code></pre>
+</div>
+
+<p>We can add italics, underline, and other formats to the main object if we want to; but it is cleaner to separate <code class="highlighter-rouge">text</code> from all of this so we organize formatting under one field, which we will name <code class="highlighter-rouge">attributes</code>.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s1">'Hello'</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s1">'World'</span><span class="p">,</span> <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">bold</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">}</span>
+<span class="p">];</span>
+</code></pre>
+</div>
+
+<h3 id="compact">Compact</h3>
+
+<p>Even with our simple Delta format so far, it is unpredictable since the above “Hello World” example can be represented differently, so we cannot predict which will be generated:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s1">'Hel'</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s1">'lo'</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s1">'World'</span><span class="p">,</span> <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">bold</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">}</span>
+<span class="p">];</span>
+</code></pre>
+</div>
+
+<p>To solve this, we add the constraint that Deltas must be compact. With this constraint, the above representation is not a valid Delta, since it can be represented more compactly by the previous example, where “Hel” and “lo” were not separate. Similarly we cannot have <code class="highlighter-rouge"><span class="p">{</span><span class="w"> </span><span class="err">bold:</span><span class="w"> </span><span class="err">false,</span><span class="w"> </span><span class="err">italic:</span><span class="w"> </span><span class="err">true,</span><span class="w"> </span><span class="err">underline:</span><span class="w"> </span><span class="err">null</span><span class="w"> </span><span class="p">}</span></code>, because <code class="highlighter-rouge"><span class="p">{</span><span class="w"> </span><span class="err">italic:</span><span class="w"> </span><span class="err">true</span><span class="w"> </span><span class="p">}</span></code> is more compact.</p>
+
+<h3 id="canonical">Canonical</h3>
+
+<p>We have not assigned any meaning to <code class="highlighter-rouge">bold</code>, just that it describes some formatting for text. We could very well have used different names, such as <code class="highlighter-rouge">weighted</code> or <code class="highlighter-rouge">strong</code>, or used a different range of possible values, such as a numerical or descriptive range of weights. An example can be found in CSS, where most of these ambiguities are at play. If we saw bolded text on a page, we cannot predict if its rule set is <code class="highlighter-rouge">font-weight: bold</code> or <code class="highlighter-rouge">font-weight: 700</code>. This makes the task of parsing CSS to discern its meaning, much more complex.</p>
+
+<p>We do not define the set of possible attributes, nor their meanings, but we do add an additional contraint that Deltas must be canonical. If two Deltas are equal, the content they represent must be equal, and there cannot be two unequal Deltas that represent the same content. Programmatically, this allows you to simply deep compare two Deltas to determine if the content they represent is equal.</p>
+
+<p>So if we had the following, the only conclusion we can draw is <code class="highlighter-rouge">a</code> is different from <code class="highlighter-rouge">b</code>, but not what <code class="highlighter-rouge">a</code> or <code class="highlighter-rouge">b</code> means.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="na">text</span><span class="p">:</span> <span class="s2">"Mystery"</span><span class="p">,</span>
+  <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">a</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">b</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">];</span>
+</code></pre>
+</div>
+
+<p>It is up to the implementer to pick appropriate names:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="na">text</span><span class="p">:</span> <span class="s2">"Mystery"</span><span class="p">,</span>
+  <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">italic</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">bold</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">];</span>
+</code></pre>
+</div>
+
+<p>This canonicalization applies to both keys and values, <code class="highlighter-rouge">text</code> and <code class="highlighter-rouge">attributes</code>. For example, Quill by default:</p>
+
+<ul>
+  <li>Uses six character hex values to represent colors and not RGB</li>
+  <li>There is only one way to represent a newline which is with <code class="highlighter-rouge">\n</code>, not <code class="highlighter-rouge">\r</code> or <code class="highlighter-rouge">\r\n</code></li>
+  <li><code class="highlighter-rouge">text: "Hello  World"</code> unambiguously means there are precisely two spaces between “Hello” and “World”</li>
+</ul>
+
+<p>Some of these choices may be customized by the user, but the canonical constraint in Deltas dictate that the choice must be unique.</p>
+
+<p>This unambiguous predictability makes Deltas easier to work with, both because you have fewer cases to handle and because there are no surprises in what a corresponding Delta will look like. Long term, this makes applications using Deltas easier to understand and maintain.</p>
+
+<h2 id="line-formatting">Line Formatting</h2>
+
+<p>Line formats affect the contents of an entire line, so they present an interesting challenge for our compact and canonical constraints. A seemingly reasonable way to represent centered text would be the following:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s2">"Hello"</span><span class="p">,</span> <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">align</span><span class="p">:</span> <span class="s2">"center"</span> <span class="p">}</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s2">"\nWorld"</span> <span class="p">}</span>
+<span class="p">];</span>
+</code></pre>
+</div>
+
+<p>But what if the user deletes the newline character? If we just naively get rid of the newline character, the Delta would now look like this:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s2">"Hello"</span><span class="p">,</span> <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">align</span><span class="p">:</span> <span class="s2">"center"</span> <span class="p">}</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s2">"World"</span> <span class="p">}</span>
+<span class="p">];</span>
+</code></pre>
+</div>
+
+<p>Is this line still centered? If the answer is no, then our representation is not compact, since we do not need the attribute object and can combine the two strings:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s2">"HelloWorld"</span> <span class="p">}</span>
+<span class="p">];</span>
+</code></pre>
+</div>
+
+<p>But if the answer is yes, then we violate the canonical constraint since any permutation of characters having an align attribute would represent the same content.</p>
+
+<p>So we cannot just naively get rid of the newline character. We also have to either get rid of line attributes, or expand them to fill all characters on the line.</p>
+
+<p>What if we removed the newline from the following?</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s2">"Hello"</span><span class="p">,</span> <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">align</span><span class="p">:</span> <span class="s2">"center"</span> <span class="p">}</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s2">"\n"</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s2">"World"</span><span class="p">,</span> <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">align</span><span class="p">:</span> <span class="s2">"right"</span> <span class="p">}</span> <span class="p">}</span>
+<span class="p">];</span>
+</code></pre>
+</div>
+
+<p>It is not clear if our resulting line is aligned center or right. We could delete both or have some ordering rule to favor one over the other, but our Delta is becoming more complex and harder to work with on this path.</p>
+
+<p>This problem begs for atomicity, and we find this in the <em>newline</em> character itself. But we have an off by one problem in that if we have <em>n</em> lines, we only have <em>n-1</em> newline characters.</p>
+
+<p>To solve this, Quill “adds” a newline to all documents and always ends Deltas with “\n”.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// Hello World on two lines</span>
+<span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s2">"Hello"</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s2">"\n"</span><span class="p">,</span> <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">align</span><span class="p">:</span> <span class="s2">"center"</span> <span class="p">}</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s2">"World"</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="s2">"\n"</span><span class="p">,</span> <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">align</span><span class="p">:</span> <span class="s2">"right"</span> <span class="p">}</span> <span class="p">}</span>   <span class="c1">// Deltas must end with newline</span>
+<span class="p">];</span>
+</code></pre>
+</div>
+
+<h2 id="embedded-content">Embedded Content</h2>
+
+<p>We want to add embedded content like images or video. Strings were natural to use for text but we have a lot more options for embeds. Since there are different types of embeds, our choice just needs to include this type information, and then the actual content. There are many reasonable options here but we will use an object whose only key is the embed type and the value is the content representation, which may have any type or value.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">img</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">image</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">url</span><span class="p">:</span> <span class="s1">'https://quilljs.com/logo.png'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">formula</span><span class="p">:</span> <span class="s1">'e=mc^2'</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<p>Similar to text, images might have some defining characteristics, and some transient ones. We used <code class="highlighter-rouge">attributes</code> for text content and can use the same <code class="highlighter-rouge">attributes</code> field for images. But because of this, we can keep the general structure we have been using, but should rename our <code class="highlighter-rouge">text</code> key into something more general. For reasons we will explore later, we will choose the name <code class="highlighter-rouge">insert</code>. Putting this all together we have:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="na">insert</span><span class="p">:</span> <span class="s1">'Hello'</span>
+<span class="p">},</span> <span class="p">{</span>
+  <span class="na">insert</span><span class="p">:</span> <span class="s1">'World'</span><span class="p">,</span>
+  <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">bold</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span>
+<span class="p">},</span> <span class="p">{</span>
+  <span class="na">insert</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">image</span><span class="p">:</span> <span class="s1">'https://exclamation.com/mark.png'</span>
+  <span class="p">},</span>
+  <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">width</span><span class="p">:</span> <span class="s1">'100'</span> <span class="p">}</span>
+<span class="p">}];</span>
+</code></pre>
+</div>
+
+<h2 id="describing-changes">Describing Changes</h2>
+
+<p>As the name Delta implies, our format can describe changes to documents, as well as documents themselves. In fact we can think of documents as the changes we would make to the empty document, to get to the one we are describing. As you might have already guessed, using Deltas to also describe changes is why we renamed <code class="highlighter-rouge">text</code> to <code class="highlighter-rouge">insert</code> earlier. We call each element in our Delta array an Operation.</p>
+
+<h4 id="delete">Delete</h4>
+
+<p>To describe deleting text, we need to know where and how many characters to delete. To delete embeds, there needs not be any special treatment, other than to understand the length of an embed. If it is anything other than one, we would then need to specify what happens when only part of an embed is deleted. There is currently no such specification, so regardless of how many pixels make up an image, how many minutes long a video is, or how many slides are in a deck; embeds are all of length <strong>one</strong>.</p>
+
+<p>One reasonable way to describe a deletion is to explicitly store its index and length.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">delta</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="na">delete</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">index</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="na">length</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">{</span>
+  <span class="na">delete</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">index</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+    <span class="na">length</span><span class="p">:</span> <span class="mi">3</span>
+  <span class="p">}</span>
+<span class="p">}];</span>
+</code></pre>
+</div>
+
+<p>We would have to order the deletions based on indexes, and ensure no ranges overlap, otherwise our canonical constraint would be violated. There are a couple other shortcomings to this index and length approach, but they are easier to appreciate after describing format changes.</p>
+
+<h4 id="insert">Insert</h4>
+
+<p>Now that Deltas may be describing changes to a non-empty document, <code class="highlighter-rouge"><span class="p">{</span><span class="w"> </span><span class="err">insert:</span><span class="w"> </span><span class="nt">"Hello"</span><span class="w"> </span><span class="err">}</span></code> is insufficient, because we do not know where “Hello” should be inserted. We can solve this by also adding an index, similar to <code class="highlighter-rouge">delete</code>.</p>
+
+<h4 id="format">Format</h4>
+
+<p>Similar to deletes, we need to specify the range of text to format, along with the format change itself. Formatting exists in the <code class="highlighter-rouge">attributes</code> object, so a simple solution is to provide an additional <code class="highlighter-rouge">attributes</code> object to merge with the existing one. This merge is shallow to keep things simple. We have not found an use case that is compelling enough to require a deep merge and warrants the added complexity.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">delta</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="na">format</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">index</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="na">length</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">},</span>
+  <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">bold</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">}];</span>
+</code></pre>
+</div>
+
+<p>The special case is when we want to remove formatting. We will use <code class="highlighter-rouge">null</code> for this purpose, so <code class="highlighter-rouge"><span class="p">{</span><span class="w"> </span><span class="err">bold:</span><span class="w"> </span><span class="err">null</span><span class="w"> </span><span class="p">}</span></code> would mean remove the bold format. We could have specified any falsy value, but there may be legitimate use cases for an attribute value to be <code class="highlighter-rouge">0</code> or the empty string.</p>
+
+<p><strong>Note:</strong> We now have to be careful with indexes at the application layer. As mentioned earlier, Deltas do not ascribe any inherent meaning to any the <code class="highlighter-rouge">attributes</code>’ key-value pairs, nor any embed types or values. Deltas do not know an image does not have duration, text does not have alternative texts, and videos cannot be bolded. The following is a <em>legal</em> Delta that might have been the result of applying other <em>legal</em> Deltas, by an application not being careful of format ranges.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">delta</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="na">insert</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">image</span><span class="p">:</span> <span class="s2">"https://imgur.com/"</span>
+  <span class="p">},</span>
+  <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">duration</span><span class="p">:</span> <span class="mi">600</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">{</span>
+  <span class="na">insert</span><span class="p">:</span> <span class="s2">"Hello"</span><span class="p">,</span>
+  <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">alt</span><span class="p">:</span> <span class="s2">"Funny cat photo"</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">{</span>
+  <span class="na">insert</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">video</span><span class="p">:</span> <span class="s2">"https://youtube.com/"</span>
+  <span class="p">},</span>
+  <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">bold</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">}];</span>
+</code></pre>
+</div>
+
+<h4 id="pitfalls">Pitfalls</h4>
+
+<p>First, we should be clear that an index must refer to its position in the document <strong>before</strong> any Operations are applied. Otherwise, a later Operation may delete a previous insert, unformat a previous format, etc., which would violate compactness.</p>
+
+<p>Operations must also be strictly ordered to satisfy our canonical constraint. Ordering by index, then length, and then type is one valid way this can be accomplished.</p>
+
+<p>As stated earlier, delete ranges cannot overlap. The case against overlapping format ranges is less brief, but it turns out we do not want overlapping formats either.</p>
+
+<p>The number of reasons a Delta might be invalid is piling up. A better format would simply not allow such cases to be expressed at all.</p>
+
+<h4 id="retain">Retain</h4>
+
+<p>If we step back from our compactness formalities for a moment, we can describe a much simpler format to express inserting, deleting, and formatting:</p>
+
+<ul>
+  <li>A Delta would have Operations that are at least as long as the document being modified.</li>
+  <li>Each Operation would describe what happens to the character at that index.</li>
+  <li>Optional insert Operations may make the Delta longer than the document it describes.</li>
+</ul>
+
+<p>This necessitates the creation of a new Operation, that will simply mean “keep this character as is”. We call this a <code class="highlighter-rouge">retain</code>.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// Starting with "HelloWorld",</span>
+<span class="c1">// bold "Hello", and insert a space right after it</span>
+<span class="kd">var</span> <span class="nx">change</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">format</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">bold</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">},</span>  <span class="c1">// H</span>
+  <span class="p">{</span> <span class="na">format</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">bold</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">},</span>  <span class="c1">// e</span>
+  <span class="p">{</span> <span class="na">format</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">bold</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">},</span>  <span class="c1">// l</span>
+  <span class="p">{</span> <span class="na">format</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">bold</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">},</span>  <span class="c1">// l</span>
+  <span class="p">{</span> <span class="na">format</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">bold</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">},</span>  <span class="c1">// o</span>
+  <span class="p">{</span> <span class="na">insert</span><span class="p">:</span> <span class="s1">' '</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">retain</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>  <span class="c1">// W</span>
+  <span class="p">{</span> <span class="na">retain</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>  <span class="c1">// o</span>
+  <span class="p">{</span> <span class="na">retain</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>  <span class="c1">// r</span>
+  <span class="p">{</span> <span class="na">retain</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>  <span class="c1">// l</span>
+  <span class="p">{</span> <span class="na">retain</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span>   <span class="c1">// d</span>
+<span class="p">]</span>
+</code></pre>
+</div>
+
+<p>Since every character is described, explicit indexes and lengths are no longer necessary. This makes overlapping ranges and out-of-order indexes impossible to express.</p>
+
+<p>Therefore, we can make the easy optimization to merge adjacent equal Operations, re-introducing <em>length</em>. If the last Operation is a <code class="highlighter-rouge">retain</code> we can simply drop it, for it simply instructs to “do nothing to the rest of the document”.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">change</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">format</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">bold</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">}</span>
+  <span class="p">{</span> <span class="nl">insert</span><span class="p">:</span> <span class="s1">' '</span> <span class="p">}</span>
+<span class="p">]</span>
+</code></pre>
+</div>
+
+<p>Furthermore, you might notice that a <code class="highlighter-rouge">retain</code> is in some ways just a special case of <code class="highlighter-rouge">format</code>. For instance, there is no practical difference between <code class="highlighter-rouge"><span class="p">{</span><span class="w"> </span><span class="err">format:</span><span class="w"> </span><span class="err">1,</span><span class="w"> </span><span class="err">attributes:</span><span class="w"> </span><span class="err">{</span><span class="p">}</span><span class="w"> </span><span class="err">}</span></code> and <code class="highlighter-rouge"><span class="p">{</span><span class="w"> </span><span class="err">retain:</span><span class="w"> </span><span class="err">1</span><span class="w"> </span><span class="p">}</span></code>. Compacting would drop the empty <code class="highlighter-rouge">attributes</code> object leaving us with just <code class="highlighter-rouge"><span class="p">{</span><span class="w"> </span><span class="err">format:</span><span class="w"> </span><span class="err">1</span><span class="w"> </span><span class="p">}</span></code>, creating a canonicalization conflict. Thus, in our example we will simply combine <code class="highlighter-rouge">format</code> and <code class="highlighter-rouge">retain</code>, and keep the name <code class="highlighter-rouge">retain</code>.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">change</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">retain</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">bold</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">insert</span><span class="p">:</span> <span class="s1">' '</span> <span class="p">}</span>
+<span class="p">]</span>
+</code></pre>
+</div>
+
+<p>We now have a Delta that is very close to the current standard format.</p>
+
+<h4 id="ops">Ops</h4>
+
+<p>Right now we have an easy to use JSON Array that describes rich text. This is great at the storage and transport layers, but applications could benefit from more functionality. We can add this by implementing Deltas as a class, that can be easily initialized from or exported to JSON, and then providing it with relevant methods.</p>
+
+<p>At the time of Delta’s inception, it was not possible to sub-class an Array. For this reason Deltas are expressed as Objects, with a single property <code class="highlighter-rouge">ops</code> that stores an array of Operations like the ones we have been discussing.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">delta</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">ops</span><span class="p">:</span> <span class="p">[{</span>
+    <span class="na">insert</span><span class="p">:</span> <span class="s1">'Hello'</span>
+  <span class="p">},</span> <span class="p">{</span>
+    <span class="na">insert</span><span class="p">:</span> <span class="s1">'World'</span><span class="p">,</span>
+    <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">bold</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span>
+  <span class="p">},</span> <span class="p">{</span>
+    <span class="na">insert</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">image</span><span class="p">:</span> <span class="s1">'https://exclamation.com/mark.png'</span>
+    <span class="p">},</span>
+    <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span> <span class="na">width</span><span class="p">:</span> <span class="s1">'100'</span> <span class="p">}</span>
+  <span class="p">}]</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<p>Finally, we arrive at the <a href="/docs/delta/">Delta format</a>, as it exists today.</p>
+
+      </div>
+      <div class="row" id="pagination-container">
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+          
+          
+            <a class="prev" href="/guides/cloning-medium-with-parchment/">
+              <span class="label">Cloning Medium with Parchment</span>
+              <span class="arrow">
+                <span class="tip"></span>
+                <span class="shaft"></span>
+              </span>
+            </a>
+          
+          
+            <a class="next" href="/guides/comparison-with-other-rich-text-editors/">
+              <span class="label">Comparison with Other Rich Text Editors</span>
+              <span class="arrow">
+                <span class="tip"></span>
+                <span class="shaft"></span>
+              </span>
+            </a>
+          
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <hr>
+  </div>
+
+  <div class="feature row">
+  <div class="six columns details">
+    <h2>An Open Source Project</h2>
+    <span>Quill is permissively licensed under BSD. Use it freely in personal or commercial projects. Join the growing community on Github!</span>
+    <div>
+    <span class="github-button">
+  <a class="github-action" target="_blank" title="Star Quill on Github" href="https://github.com/quilljs/quill/">
+    <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.3 6.53 5.47 7.6.4.06.55-.18.55-.4 0-.18 0-.8 0-1.48-2.02.37-2.54-.5-2.7-.94-.1-.23-.48-.94-.82-1.13-.28-.15-.68-.52 0-.53.62 0 1.07.58 1.22.82.72 1.2 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.77-.2-3.63-.9-3.63-3.95 0-.87.3-1.6.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.2 2.2.83.64-.18 1.32-.27 2-.27.68 0 1.36.1 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.93.08 2.13.5.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.3.25.54.73.54 1.48 0 1.08 0 1.94 0 2.2 0 .22.15.47.55.4C13.7 14.52 16 11.52 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    <span>Star</span>
+  </a>
+  <a class="github-count" target="_blank" title="Quill Stargazers" href="https://github.com/quilljs/quill/stargazers">8,000</a>
+</span>
+    </div>
+  </div>
+  <img class="six columns" src="/assets/images/features/open-source.svg">
+</div>
+</div>
+          
+        
+          
+          
+        
+          
+          
+            
+          
+        
+      
+    
+    <footer>
+  <div class="container">
+    <div class="logo row"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 942 559.9"><style type="text/css">.st0{fill:#1D1E30;}</style><circle cx="749" cy="125.5" r="25.7" class="st0"/><path d="M643.3 211.5c0 21.2 0 76.5 0 91.8 0 19.5-3.5 90.9-76.1 90.9-75.9 0-74.3-71.3-74.3-98.8 0-23.4 0-70.4 0-83.8h-39v94.1s-8.1 128.5 111.3 128.5c119.4 0 115.4-124.5 115.4-124.5v-98.2h-37.3zM816.5 45.2H855v378.5h-38.5zM504 472.7c-79.4 0-194.9-12-268.3-12.8-12.2 0-23 1.5-32.6 3.9l13-11.6c14.3-12.9 37.6-20.9 43.4-22 94.4-18.6 164.8-93.7 164.8-212.8C424.3 83.2 329.3 0 212.1 0S0 76.9 0 217.3c0 126.8 84.9 208 193.1 216.5 0 0 5.7.1 6.4 3.6.6 3.1-4.8 7.6-4.8 7.6l-64.4 59.6 12.4 13.4 23.8-21.3c13.3-10.6 35.1-23.6 62.1-23.6 89.3 0 188.2 89.1 280.1 86.9 134.4-3.2 165.7-93 169.1-104.6.2-.4-55.6 17.3-173.8 17.3zM39.4 217.3c0-114.3 77.3-177 172.8-177 95.4 0 172.8 67.7 172.8 177 0 112.6-77.3 177-172.8 177-95.5-.1-172.8-67.8-172.8-177zM903.5 45.2H942v378.5h-38.5zM729.5 211.1H768v212.5h-38.5z" class="st0"/></svg></div>
+    <h1>Your powerful, rich text editor.</h1>
+    <div class="actions row">
+      <a href="/docs/" class="action documentation">Documentation</a>
+      <a href="/docs/download/" class="action">
+        Download v
+      </a>
+    </div>
+    <div class="users row">
+      <h3>Trusted By</h3>
+    </div>
+  </div>
+</footer>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    
+    
+      
+      
+    
+      
+      
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('h1, h2, h3, h4', $('#docs-container')).each(function(i, h) {
+    if (!h.id) return;
+    $('<a class="anchor" href="#' + h.id + '"></a>').prependTo($(h));
+  });
+  $('#sidebar-container .sidebar-button').click(function() {
+    $('#sidebar-container').toggleClass('active');
+  });
+  docsearch({
+    apiKey: '281facf513620e95600126795a00ab6c',
+    indexName: 'quilljs',
+    inputSelector: '.search-item input',
+    debug: false
+  });
+});
+</script>
+      
+    
+      
+      
+    
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $('.navbar-open').click(function() {
+        $('.navbar-drop').addClass('active');
+      });
+      $('.navbar-close').click(function() {
+        $('.navbar-drop').removeClass('active');
+      });
+
+      var counts = $('.github-count');
+      if (counts.length > 0) {
+        $.getJSON('https://api.github.com/search/repositories?q=quill+user:quilljs+repo:quill&sort=stars&order=desc', function(data) {
+          if (data.items && data.items[0].full_name === 'quilljs/quill') {
+            counts.text(data.items[0].stargazers_count.toLocaleString());
+          }
+        });
+      }
+    });
+    </script>
+    </div>
+  </body>
+</html>

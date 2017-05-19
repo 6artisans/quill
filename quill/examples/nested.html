@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Full Editor - Quill</title>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="language" content="english">
+<meta name="viewport" content="width=device-width">
+
+<meta name="description" content="Quill is a free, open source WYSIWYG editor built for the modern web. With its modular architecture and expressive API, it is completely customizable to fit any need.">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@quilljs">
+
+<meta name="twitter:title" content="Full Editor - Quill">
+
+<meta name="twitter:description" content="Quill is a free, open source WYSIWYG editor built for the modern web.">
+<meta name="twitter:image" content="http://quilljs.com/assets/images/brand-asset.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://quilljs.com/standalone/nested/">
+<meta property="og:image" content="http://quilljs.com/assets/images/brand-asset.png">
+<meta property="og:title" content="Full Editor - Quill">
+<meta property="og:site_name" content="Quill">
+<link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+<link type="application/atom+xml" rel="alternate" href="https://quilljs.com/feed.xml" title="Quill - Your powerful, rich text editor" />
+  
+  
+</head>
+<body>
+  <?xml version="1.0" encoding="UTF-8"?>
+<!-- Include the Quill snow theme -->
+<link href="../quill.snow.css" rel="stylesheet" />
+
+<!-- Include the Quill extended toolbar CSS -->
+<link href="../container.css" rel="stylesheet" />
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<link href="./assets/css/application.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+<body class="">
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar">
+        </span>
+        <span class="icon-bar">
+        </span>
+        <span class="icon-bar">
+        </span>
+        </button>
+        <a class="navbar-brand" href="http://">          DEMO Avvoka</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="http://localhost:3000/templates">Create</a>
+          </li>
+          <li>
+            <a href="http://localhost:3000/documents">My documents</a>
+          </li>
+          <li>
+            <a href="/users/edit">Account</a>
+          </li>
+          <li>
+            <a href="http://localhost:3000/faq/index">Help</a>
+          </li>
+          <li id="fat-menu" class="dropdown">
+            <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-user">
+            </i> LOGGED IN: <span id="username" class="active">Aimee Godden</span>
+            <i class="icon-caret-down">
+            </i>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+              </li>
+              <li>
+              </li>
+              <!--<li class="divider">
+                </li>-->
+              <li>
+                <a rel="nofollow" data-method="delete" href="/users/sign_out">Log out</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container-fluid ">
+    <div id="notice-placeholder">
+    </div>
+    <div class="row">
+      <div class="col-lg-2 col-sm-12 sidebar">
+        <div class="sidebar-content tabs">
+          <h1>Draft negotiation</h1>
+          <ul class="nav nav-pills nav-stacked" role="tablist" id="stacked-menu">
+            <li role="presentation" class="active">
+              <a href="#settings-tab" aria-controls="settings" role="pill" data-toggle="pill">Settings</a>
+            </li>
+            <li role="presentation">
+              <a href="#document-tab" aria-controls="document" role="pill" data-toggle="pill">Document</a>
+            </li>
+            <li role="presentation">
+              <a href="#questionnaire-tab" aria-controls="questionnaire" role="pill" data-toggle="pill">Questionnaire</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-10 col-md-12 col-sm-12 border-left p-top-1 comments-col">
+        <div class="col-md-9">
+          <form id="template-form" class="form-horizontal" role="form" enctype="multipart/form-data" action="/templates/317" accept-charset="UTF-8" method="post">
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <!-- Document TAB ----------------------------------------------------------->
+              <div role="tabpanel" class="tab-pane active" id="document-tab">
+                <div class="form-group">
+                  <!-- Create the editor container -->
+                  <div id="editor">
+                  </div>
+                  <!-- Initialize Quill editor -->
+                  <script type="text/javascript" src="../quill.dev.load.js"></script>
+                  <br />
+                  <br />
+                  <div style="float: left; width: 48%;">
+                    <p>CURRENT DELTA: <a href="#" onclick="quill.setContents(JSON.parse(document.getElementById('output_delta').value));">reload</a>
+                    </p>
+                    <textarea id="output_delta" style="width:100%; height:200px; padding: 3px;">
+                            </textarea>
+                  </div>
+                  <div style="float: right; width: 48%;">
+                    <p>CURRENT HTML: <a href="#" onclick="quill.clipboard.dangerouslyPasteHTML(document.getElementById('output_html').value);">reload</a>
+                    </p>
+                    <textarea id="output_html" style="width:100%; height:200px; padding: 3px;">
+                          </textarea>
+                  </div>
+                  <div style="clear: both">
+                  </div>
+                  <div style="float: left; width: 48%;">
+                    <p>
+                      <a href="#" onclick="quill.setContents(JSON.parse(document.getElementById('input_delta').value));">LOAD DELTA: </a>
+                    </p>
+                    <textarea id="input_delta" style="width:100%; height:200px; padding: 3px;">
+                          </textarea>
+                  </div>
+                  <div style="float: right; width: 48%;">
+                    <p>
+                      <a href="#" onclick="quill.clipboard.dangerouslyPasteHTML(document.getElementById('input_html').value);">dangerously PASTE HTML:</a>
+                    </p>
+                    <textarea id="input_html" style="width:100%; height:200px; padding: 3px;">
+                          </textarea>
+                  </div>
+                  <div style="clear: both">
+                  </div>
+                  <p>SAVED interesting testing deltas:</p>
+                  <script>let container_test = {"ops":[{"insert":"Hello World!\nbla"},{"insert":"\n","attributes":{"contain":"CONTAIN"}},{"insert":"Hello World!"},{"insert":"\n","attributes":{"td":"first-cell|undefined|undefined"}},{"insert":"sadf"},{"insert":"\n","attributes":{"td":"second-cell|undefined|undefined"}},{"insert":"bla"},{"insert":"\n","attributes":{"contain":"CONTAIN"}},{"insert":"table left"},{"insert":"\n","attributes":{"td":"4udxtmrh7fk|o8gczyfgqni|c76kors0qeg","contain":"CONTAIN"}},{"insert":"table right"},{"insert":"\n","attributes":{"td":"4udxtmrh7fk|o8gczyfgqni|6jyp3g0cj7h","contain":"CONTAIN"}},{"insert":"sadfds"},{"insert":"\n","attributes":{"contain":"CONTAIN"}}]}</script>
+                  <a href="#" onclick="quill.setContents(container_test);">load pure container</a>
+                  <br />
+                  <script>let table_cells = {"ops":[      {"insert":"tables:\n"},      {"insert":"000"},{"insert":"\n","attributes":{"td":"t0|r0|c0"}},      {"insert":"000 twice"},{"insert":"\n","attributes":{"td":"t0|r0|c0"}},      {"insert":"100"},{"insert":"\n","attributes":{"td":"t1|r0|c0"}},      {"insert":"110"},{"insert":"\n","attributes":{"td":"t1|r1|c0"}},      {"insert":"111"},{"insert":"\n","attributes":{"td":"t1|r1|c1"}},      {"insert":"111"},{"insert":"\n","attributes":{"td":"t1|r1|c1"}},      ]}</script>
+                  <a href="#" onclick="quill.setContents(table_cells);">load table cells</a>
+                  <br />
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-3">
+          <div class="comments-wrapper">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+  
+  
+</body>
+</html>

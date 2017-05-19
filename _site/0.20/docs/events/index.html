@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Events - Quill</title>
+  <meta name="description" content="Quill is a free, open source WYSIWYG editor built for the modern web. With its expressive API, you can completely customize it to fit your needs.">
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="language" content="english">
+<meta name="viewport" content="width=device-width">
+
+<meta name="description" content="Quill is a free, open source WYSIWYG editor built for the modern web. With its modular architecture and expressive API, it is completely customizable to fit any need.">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@quilljs">
+
+<meta name="twitter:title" content="Events - Quill - Quill">
+
+<meta name="twitter:description" content="Quill is a free, open source WYSIWYG editor built for the modern web.">
+<meta name="twitter:image" content="http://quilljs.com/assets/images/brand-asset.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://quilljs.com/0.20/docs/events/">
+<meta property="og:image" content="http://quilljs.com/assets/images/brand-asset.png">
+<meta property="og:title" content="Events - Quill - Quill">
+<meta property="og:site_name" content="Quill">
+<link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+<link type="application/atom+xml" rel="alternate" href="https://quilljs.com/feed.xml" title="Quill - Your powerful, rich text editor" />
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/0.20/assets/css/syntax.css">
+  <link rel="stylesheet" href="/0.20/assets/css/styles.css">
+  <link rel="stylesheet" href="//cdn.quilljs.com/0.20.1/quill.snow.css">
+  <script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-19077541-2', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+  window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(r?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","removeEventProperty","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
+  heap.load("1135832181");
+</script>
+</head>
+<body>
+<a class="version-warning" href="/latest/"><strong>Yeaaah!</strong> A newer version <strong>Quill </strong> is out! You are viewing docs for <strong>v0.20</strong>.</a>
+<header id="navigation-container" class="navbar">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle Navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/0.20/" title="Quill">
+        <img src="/0.20/assets/images/icon.png" alt="Quill">
+        <span>Quill</span>
+      </a>
+    </div>
+    <nav class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/0.20/docs/quickstart/" title="Documentation">Documentation</a></li>
+        <li><a href="/0.20/examples/" title="Examples">Examples</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li ><a href="/blog/" title="Blog">Blog</a></li>
+        <li><iframe class="github-button" src="//ghbtns.com/github-btn.html?user=quilljs&amp;repo=quill&amp;type=watch&amp;count=true"></iframe></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="container">
+  <div id="sidebar-dropdown">
+    <div class="btn-group">
+      <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">Navigate the Docs... <span class="caret"></span></button>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="/0.20/docs/quickstart/">Quickstart</a>
+        </li>
+        <li>
+          <a href="/0.20/docs/configuration/">Configuration</a>
+        </li>
+        <li>
+          <a href="/0.20/docs/formats/">Formats</a>
+        </li>
+        <li>
+          <a href="/0.20/docs/api/">API</a>
+        </li>
+        <li class="active">
+          <a href="/0.20/docs/events/">Events</a>
+        </li>
+        <li>
+          <a href="/0.20/docs/deltas/">Deltas</a>
+        </li>
+        <li>
+          <a href="/0.20/docs/modules/">Modules</a>
+          <ul>
+            <li>
+              <a href="/0.20/docs/modules/toolbar/">Toolbar</a>
+            </li>
+            <li>
+              <a href="/0.20/docs/modules/authorship/">Authorship</a>
+            </li>
+            <li>
+              <a href="/0.20/docs/modules/multi-cursors/">Multiple Cursors</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="/0.20/docs/themes/">Themes</a>
+        </li>
+        <li>
+          <a href="/0.20/examples/">Examples</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-9" id="docs-container">
+      <h1 id="events">Events</h1>
+      <p>Quill inherits from <a href="https://github.com/asyncly/EventEmitter2">EventEmitter</a> and allows
+      you access to listen to the following events:</p>
+      <ol>
+        <li>
+          <a href="#text-change">text-change</a>
+        </li>
+        <li>
+          <a href="#selection-change">selection-change</a>
+        </li>
+      </ol>
+      <h3 id="text-change">Text Change</h3>
+      <p>Emitted when the contents of Quill have changed. Details of the
+      change, along with the source of the change are provided. The source will
+      be <code class="highlighter-rouge">"user"</code> if it originates from
+      the users. For example:</p>
+      <ul>
+        <li>- User types into the editor</li>
+        <li>- User formats text using the toolbar</li>
+        <li>- User uses a hotkey to undo</li>
+        <li>- User uses OS spelling correction</li>
+      </ul>
+      <p>Changes may occur through an API but as long as they originate from
+      the user, the provided source will still be <code class="highlighter-rouge">"user"</code>. For example, when a user clicks on the
+      toolbar, technically the toolbar module calls a Quill API to effect the
+      change. But source is still <code class="highlighter-rouge">"user"</code>
+      since the origin of the change was the user’s click.</p>
+      <p><strong>Callback Parameters</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code class="highlighter-rouge">delta</code></td>
+            <td>
+              <a href="/0.20/docs/deltas/"><em>Delta</em></a>
+            </td>
+            <td>Represention of change.</td>
+          </tr>
+          <tr>
+            <td><code class="highlighter-rouge">source</code></td>
+            <td><em>String</em></td>
+            <td>Source of change. Will be either <code class="highlighter-rouge">"user"</code> or <code class="highlighter-rouge">"api"</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>Examples</strong></p>
+      <figure class="highlight">
+        <pre>
+<code class="language-javascript" data-lang="javascript"><span class="nx">editor</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'text-change'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">delta</span><span class="p">,</span> <span class="nx">source</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">source</span> <span class="o">==</span> <span class="s1">'api'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"An API call triggered this change."</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">source</span> <span class="o">==</span> <span class="s1">'user'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"A user action triggered this change."</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span></code>
+</pre>
+      </figure>
+      <h3 id="selection-change">Selection Change</h3>
+      <p>Emitted when a user or API causes the selection to change, with a
+      range representing the selection boundaries. A null range indicates
+      selection loss (usually caused by loss of focus from the editor).</p>
+      <p>You can also use this event as a focus change event by just checking
+      if the emitted range is null or not.</p>
+      <p><strong>Callback Parameters</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code class="highlighter-rouge">range</code></td>
+            <td><em>Object</em></td>
+            <td>Object with <strong>start</strong> and <strong>end</strong>
+            keys indicating the corresponding indexes where the selection
+            exists.</td>
+          </tr>
+          <tr>
+            <td><code class="highlighter-rouge">source</code></td>
+            <td><em>String</em></td>
+            <td>Source of change. Will be either <code class="highlighter-rouge">"user"</code> or <code class="highlighter-rouge">"api"</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>Examples</strong></p>
+      <figure class="highlight">
+        <pre>
+<code class="language-javascript" data-lang="javascript"><span class="nx">editor</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'selection-change'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">range</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">range</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">range</span><span class="p">.</span><span class="nx">start</span> <span class="o">==</span> <span class="nx">range</span><span class="p">.</span><span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'User cursor is on'</span><span class="p">,</span> <span class="nx">range</span><span class="p">.</span><span class="nx">start</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">editor</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="nx">range</span><span class="p">.</span><span class="nx">start</span><span class="p">,</span> <span class="nx">range</span><span class="p">.</span><span class="nx">end</span><span class="p">);</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'User has highlighted'</span><span class="p">,</span> <span class="nx">text</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Cursor not in the editor'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span></code>
+</pre>
+      </figure>
+    </div>
+    <div class="col-sm-3" id="sidebar-container">
+      <div class="sidebar-nav" data-offset-top="40" data-spy="affix">
+        <ul class="nav">
+          <li>
+            <a href="/0.20/docs/quickstart/">Quickstart</a>
+          </li>
+          <li>
+            <a href="/0.20/docs/configuration/">Configuration</a>
+          </li>
+          <li>
+            <a href="/0.20/docs/formats/">Formats</a>
+          </li>
+          <li>
+            <a href="/0.20/docs/api/">API</a>
+          </li>
+          <li class="active">
+            <a href="/0.20/docs/events/">Events</a>
+          </li>
+          <li>
+            <a href="/0.20/docs/deltas/">Deltas</a>
+          </li>
+          <li>
+            <a href="/0.20/docs/modules/">Modules</a>
+            <ul class="nav">
+              <li>
+                <a href="/0.20/docs/modules/toolbar/">Toolbar</a>
+              </li>
+              <li>
+                <a href="/0.20/docs/modules/authorship/">Authorship</a>
+              </li>
+              <li>
+                <a href="/0.20/docs/modules/multi-cursors/">Multiple
+                Cursors</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="/0.20/docs/themes/">Themes</a>
+          </li>
+          <li>
+            <a href="/0.20/examples/">Examples</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript"></script>
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" type="text/javascript"></script>
+
+
+<footer>
+  <div class="container">
+    <ul>
+      <li><iframe src="//ghbtns.com/github-btn.html?user=quilljs&amp;repo=quill&amp;type=watch&amp;count=true" title="Star on GitHub" width="100" height="20"></iframe></li>
+      <li><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://quilljs.com" data-text="Quill - A Rich Text Editor with an API" data-via="quilljs">Tweet</a></li>
+    </ul>
+    <div>
+      Quill is open source under
+      <a title="BSD" href="https://github.com/quilljs/quill#license">BSD</a>.
+      The latest version is currently
+      <a title="Version 0.20.1" href="https://github.com/quilljs/quill/releases/tag/v.">v.</a>
+    </div>
+  </div>
+</footer>
+<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+</body>
+</html>

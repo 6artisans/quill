@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Comparison with Other Rich Text Editors - Quill</title>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="language" content="english">
+<meta name="viewport" content="width=device-width">
+
+<meta name="description" content="Quill is a free, open source WYSIWYG editor built for the modern web. With its modular architecture and expressive API, it is completely customizable to fit any need.">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@quilljs">
+
+<meta name="twitter:title" content="Comparison with Other Rich Text Editors - Quill">
+
+<meta name="twitter:description" content="Quill is a free, open source WYSIWYG editor built for the modern web.">
+<meta name="twitter:image" content="http://quilljs.com/assets/images/brand-asset.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://quilljs.com/guides/comparison-with-other-rich-text-editors/">
+<meta property="og:image" content="http://quilljs.com/assets/images/brand-asset.png">
+<meta property="og:title" content="Comparison with Other Rich Text Editors - Quill">
+<meta property="og:site_name" content="Quill">
+<link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+<link type="application/atom+xml" rel="alternate" href="https://quilljs.com/feed.xml" title="Quill - Your powerful, rich text editor" />
+    <link rel="stylesheet" href="/assets/css/base.css">
+    
+    
+      
+      
+    
+      
+      
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css">
+      
+    
+      
+      
+    
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-19077541-2', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+  window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(r?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","removeEventProperty","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
+  heap.load("1135832181");
+</script>
+  </head>
+  <body>
+    <header>
+  <nav class="navbar-drop">
+    <button class="navbar-close"></button>
+    <ul>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/docs/quickstart/">Documentation</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/guides/why-quill/">Guides</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/playground/">Playground</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/blog/">Blog</a>
+      </li>
+      <li class="navbar-item">
+        <span class="github-button dark-bg">
+  <a class="github-action" target="_blank" title="Star Quill on Github" href="https://github.com/quilljs/quill/">
+    <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.3 6.53 5.47 7.6.4.06.55-.18.55-.4 0-.18 0-.8 0-1.48-2.02.37-2.54-.5-2.7-.94-.1-.23-.48-.94-.82-1.13-.28-.15-.68-.52 0-.53.62 0 1.07.58 1.22.82.72 1.2 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.77-.2-3.63-.9-3.63-3.95 0-.87.3-1.6.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.2 2.2.83.64-.18 1.32-.27 2-.27.68 0 1.36.1 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.93.08 2.13.5.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.3.25.54.73.54 1.48 0 1.08 0 1.94 0 2.2 0 .22.15.47.55.4C13.7 14.52 16 11.52 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    <span>Star</span>
+  </a>
+  <a class="github-count" target="_blank" title="Quill Stargazers" href="https://github.com/quilljs/quill/stargazers">8,000</a>
+</span>
+      </li>
+    </ul>
+  </nav>
+  <nav class="container">
+    <ul class="navbar-list">
+      <li class="navbar-item">
+        <a class="navbar-link" href="/docs/quickstart/">Documentation</a>
+      </li>
+      <li class="active navbar-item">
+        <a class="navbar-link" href="/guides/why-quill/">Guides</a>
+      </li>
+      <li class="logo-item">
+        <a class="logo" href="/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 942 559.9"><style type="text/css">.st0{fill:#1D1E30;}</style><circle cx="749" cy="125.5" r="25.7" class="st0"/><path d="M643.3 211.5c0 21.2 0 76.5 0 91.8 0 19.5-3.5 90.9-76.1 90.9-75.9 0-74.3-71.3-74.3-98.8 0-23.4 0-70.4 0-83.8h-39v94.1s-8.1 128.5 111.3 128.5c119.4 0 115.4-124.5 115.4-124.5v-98.2h-37.3zM816.5 45.2H855v378.5h-38.5zM504 472.7c-79.4 0-194.9-12-268.3-12.8-12.2 0-23 1.5-32.6 3.9l13-11.6c14.3-12.9 37.6-20.9 43.4-22 94.4-18.6 164.8-93.7 164.8-212.8C424.3 83.2 329.3 0 212.1 0S0 76.9 0 217.3c0 126.8 84.9 208 193.1 216.5 0 0 5.7.1 6.4 3.6.6 3.1-4.8 7.6-4.8 7.6l-64.4 59.6 12.4 13.4 23.8-21.3c13.3-10.6 35.1-23.6 62.1-23.6 89.3 0 188.2 89.1 280.1 86.9 134.4-3.2 165.7-93 169.1-104.6.2-.4-55.6 17.3-173.8 17.3zM39.4 217.3c0-114.3 77.3-177 172.8-177 95.4 0 172.8 67.7 172.8 177 0 112.6-77.3 177-172.8 177-95.5-.1-172.8-67.8-172.8-177zM903.5 45.2H942v378.5h-38.5zM729.5 211.1H768v212.5h-38.5z" class="st0"/></svg></a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/playground/">Playground</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/blog/">Blog</a>
+      </li>
+      <li class="download-item">
+        <a class="action" href="/docs/download/">Download</a>
+      </li>
+    </ul>
+  </nav>
+  <button class="navbar-open">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+    
+    
+      
+        
+        
+          
+        
+      
+    
+      
+        
+        
+      
+    
+      
+        
+        
+          
+          
+            <div id="docs-wrapper" class="container">
+  <div class="row">
+    <div id="sidebar-container" class="three columns">
+      <button class="sidebar-button">Document Navigation</button>
+      <ul class="sidebar-list">
+        <li class="search-item"><input type="text"></li>
+        
+<li>
+  <a href="/guides/why-quill/">Why Quill</a>
+  
+</li>
+
+<li>
+  <a href="/guides/how-to-customize-quill/">How to Customize Quill</a>
+  
+</li>
+
+<li>
+  <a href="/guides/adding-quill-to-your-build-pipeline/">Adding Quill to Your Build Pipeline</a>
+  
+</li>
+
+<li>
+  <a href="/guides/building-a-custom-module/">Building a Custom Module</a>
+  
+</li>
+
+<li>
+  <a href="/guides/cloning-medium-with-parchment/">Cloning Medium with Parchment</a>
+  
+</li>
+
+<li>
+  <a href="/guides/designing-the-delta-format/">Designing the Delta Format</a>
+  
+</li>
+
+<li class="active">
+  <a href="/guides/comparison-with-other-rich-text-editors/">Comparison with Other Rich Text Editors</a>
+  
+</li>
+
+<li>
+  <a href="/guides/upgrading-to-1-0/">Upgrading to 1.0</a>
+  
+</li>
+
+      </ul>
+    </div>
+    <div id="docs-container" class="nine columns">
+      <div class="row">
+        <span class="breadcrumb">
+          <span>Guides:</span>
+          <span>Comparison with Other Rich Text Editors</span>
+        </span>
+        <a class="edit-link" href="https://github.com/quilljs/quill/tree/develop/docs/guides/comparison-with-other-rich-text-editors.md" target="_blank" title="Edit on Github">
+          <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.3 6.53 5.47 7.6.4.06.55-.18.55-.4 0-.18 0-.8 0-1.48-2.02.37-2.54-.5-2.7-.94-.1-.23-.48-.94-.82-1.13-.28-.15-.68-.52 0-.53.62 0 1.07.58 1.22.82.72 1.2 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.77-.2-3.63-.9-3.63-3.95 0-.87.3-1.6.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.2 2.2.83.64-.18 1.32-.27 2-.27.68 0 1.36.1 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.93.08 2.13.5.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.3.25.54.73.54 1.48 0 1.08 0 1.94 0 2.2 0 .22.15.47.55.4C13.7 14.52 16 11.52 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          <span>Edit on Github</span>
+        </a>
+      </div>
+      <hr>
+      <div id="content-container">
+        
+        <h1 id="comparison with other rich text editors">Comparison with Other Rich Text Editors</h1>
+        <h2 id="ckeditor-and-tinymce">CKEditor and TinyMCE</h2>
+
+<p>CKEditor and TinyMCE are both very widely used, having been around for over a decade. Quill introduces several new ideas that separate it from these traditional editors:</p>
+
+<ul>
+  <li>
+    <p>Treat <code class="highlighter-rouge">contenteditable</code> as an input, not a complete editor or API. Browsers never fully agreed on or specified the complete scope of <code class="highlighter-rouge">contenteditable</code>. Left to their own interpretations, each ended with different implementations that featured their own quirks and a proliferation of bugs, earning <code class="highlighter-rouge">contenteditable</code> deserved notoriety. It is still possible today crash an entire browser, using <code class="highlighter-rouge">contenteditable</code> APIs.</p>
+  </li>
+  <li>
+    <p>Offer a substantive API on top of the DOM. Most of CKEditor and TinyMCE’s APIs offer little more than syntactic sugar on top of existing DOM APIs. Quill maintains internal document model and does not rely on the DOM as the source of truth, allow it to offer far more powerful and relevant APIs for text editing.</p>
+  </li>
+  <li>
+    <p>Allow customization and new additions of formats and content. Quill considers the web as a target output, not just paper. Therefore, in additional to supporting traditional formats commonly found in word processors, like bold, italics and lists, Quill allows the definition of entirely new formats and content it has not imagined. Quill’s users have already added customizations to embed slide decks, interactive checklists, and 3D models.</p>
+  </li>
+</ul>
+
+<p>CKEditor and TinyMCE are different editors but are both so different from Quill in the same ways that the nuances between them are not distinct and so are compared together. Nevertheless, CKEditor or TinyMCE might be a better choice if:</p>
+
+<ul>
+  <li>
+    <p>You need to support very old browsers. Quill follows the policy of many other Javascript libraries of supporting the latest two versions of each major browser.</p>
+  </li>
+  <li>
+    <p>You need to set or edit the underlying HTML directly with arbitrary HTML. Quill does not support arbitrary modifications to its contents with <code class="highlighter-rouge">innerHTML</code> as it leads to surprising and buggy behavior. Instead, it provides a consistent <a href="/docs/api/">API</a> for modification and the ability to define new formats and content through <a href="https://github.com/quilljs/parchment/">Parchment</a>.</p>
+  </li>
+</ul>
+
+<h2 id="draft">Draft</h2>
+
+<p>Draft is often compared with Quill, but Draft, by its own description, is a “Rich Text Editor Framework for React.” It provides the building blocks to create an editor, but is not one ready to use by itself. It is still worthwhile to compare Quill’s internals with Draft however:</p>
+
+<ul>
+  <li>
+    <p>Prior to Quill 1.0, Draft allowed more customization over its content and document model, but this is no longer the case. Quill now exposes its document model, called <a href="https://github.com/quilljs/parchment">Parchment</a>, and allows customization to an even deeper level than Draft at this point. <a href="/guides/cloning-medium-with-parchment/">Cloning Medium with Parchment</a> is a great demonstration of what is possible with Parchment.</p>
+  </li>
+  <li>
+    <p>Draft organizes nodes into two levels: block and inline. Parchment also has a block and inline layer, but inline nodes can be nested, allowing semantic output such as <code class="highlighter-rouge">&lt;strong&gt;&lt;em&gt;Stronger&lt;/em&gt;&lt;/strong&gt;</code> whereas the equivalent in Draft must use just one inline format node and utilizes inline styles:</p>
+
+    <div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;span</span> <span class="na">data-offset-key=</span><span class="s">"1oo4h-0-0"</span> <span class="na">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;span</span> <span class="na">data-text=</span><span class="s">"true"</span><span class="nt">&gt;</span>Stronger<span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/span&gt;</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Draft’s API inherits primitives and ideas from React, that is more appropriate for general websites. Quill’s only use case is rich text content so its API can be much simpler and specific towards this use case. API simplicity and design is subjective so the best metric for you might be to think of a common task, like bolding a range of text, and try to figure out how to do it in Quill and how to do it in Draft.</p>
+  </li>
+  <li>
+    <p>React, React DOM, and immutable.js are dependencies of Draft which adds a lot of weight for users not already on React.</p>
+  </li>
+</ul>
+
+<p>The main difference is still that Quill is a ready to use rich text editor, with user interactions considered and interfaces thought out and implemented. Draft provides the building blocks but you will have to implement all the pieces above the data layer yourself.</p>
+
+<h2 id="prosemirror">ProseMirror</h2>
+
+<p>ProseMirror is relatively new but has already captured signficant attention, being built by the same author of  CodeMirror. That being said a robust comparison of the product and implementation is premature as ProseMirror is still in the development stages, as noted in their README:</p>
+
+<blockquote>
+  <p>NOTE: This project is in BETA stage. It isn’t thoroughly tested, and the API might still change across 0.x releases. You are welcome to use it, but don’t expect it to be very stable yet.</p>
+</blockquote>
+
+<p>Instead we will compare the ideas and goals:</p>
+
+<ul>
+  <li>
+    <p>Both Quill and ProseMirror implement and maintain a data model to operate on with APIs, instead of allowing users to modify DOM directly.</p>
+  </li>
+  <li>
+    <p>Support realtime collaboration. Quill users are already doing so in production.</p>
+  </li>
+  <li>
+    <p>Quill’s architecture is more modular, allowing for easier customization of internals. Core modules that handle basic functionality like copy/paste and undo/redo can be swapped out in Quill.</p>
+  </li>
+  <li>
+    <p>ProseMirror favors broad exposure of API methods, configurations and variables. Quill treats developers as users and designs an organized API surface, judicious in what to expose, sometimes hiding confusing methods or creating new ones that unify several internal operations.</p>
+  </li>
+</ul>
+
+<h2 id="trix">Trix</h2>
+
+<p>Trix is another newly released editor that has adopted many modern ideas in rich text editing. This includes a data model on top of the DOM and treating <code class="highlighter-rouge">contenteditable</code> as an input, which Quill and other modern editors also embrace. In addition, Quill offers some significant advantages over Trix:</p>
+
+<ul>
+  <li>
+    <p>More <a href="/docs/formats/">format</a> support. Quill supports all formats found in Trix, and also supports text color, font, background, size, superscript, subscript, underline, text alignment, text direction, syntax highlighted code, videos, and formulas, which are not supported in Trix.</p>
+  </li>
+  <li>
+    <p>Allows customization of existing formats and content, or even adding new ones. Trix implements each format in one way, and allows no further customization.</p>
+  </li>
+  <li>
+    <p>Modularized internals that can be configured or even swapped out. Trix is architected as a monolith.</p>
+  </li>
+  <li>
+    <p>Trix offers one UI, that users likely will need to polish with custom CSS. Quill offers two beautiful, ready to use themes, one centering around a persistent <a href="/docs/themes/#snow">toolbar</a> and one around a Medium-like <a href="/docs/themes/#bubble">tooltip theme</a>.</p>
+  </li>
+</ul>
+
+      </div>
+      <div class="row" id="pagination-container">
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+          
+          
+            <a class="prev" href="/guides/designing-the-delta-format/">
+              <span class="label">Designing the Delta Format</span>
+              <span class="arrow">
+                <span class="tip"></span>
+                <span class="shaft"></span>
+              </span>
+            </a>
+          
+          
+            <a class="next" href="/guides/upgrading-to-1-0/">
+              <span class="label">Upgrading to 1.0</span>
+              <span class="arrow">
+                <span class="tip"></span>
+                <span class="shaft"></span>
+              </span>
+            </a>
+          
+        
+        
+      
+        
+        
+      
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <hr>
+  </div>
+
+  <div class="feature row">
+  <div class="six columns details">
+    <h2>An Open Source Project</h2>
+    <span>Quill is permissively licensed under BSD. Use it freely in personal or commercial projects. Join the growing community on Github!</span>
+    <div>
+    <span class="github-button">
+  <a class="github-action" target="_blank" title="Star Quill on Github" href="https://github.com/quilljs/quill/">
+    <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.3 6.53 5.47 7.6.4.06.55-.18.55-.4 0-.18 0-.8 0-1.48-2.02.37-2.54-.5-2.7-.94-.1-.23-.48-.94-.82-1.13-.28-.15-.68-.52 0-.53.62 0 1.07.58 1.22.82.72 1.2 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.77-.2-3.63-.9-3.63-3.95 0-.87.3-1.6.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.2 2.2.83.64-.18 1.32-.27 2-.27.68 0 1.36.1 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.93.08 2.13.5.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.3.25.54.73.54 1.48 0 1.08 0 1.94 0 2.2 0 .22.15.47.55.4C13.7 14.52 16 11.52 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    <span>Star</span>
+  </a>
+  <a class="github-count" target="_blank" title="Quill Stargazers" href="https://github.com/quilljs/quill/stargazers">8,000</a>
+</span>
+    </div>
+  </div>
+  <img class="six columns" src="/assets/images/features/open-source.svg">
+</div>
+</div>
+          
+        
+          
+          
+        
+          
+          
+            
+          
+        
+      
+    
+    <footer>
+  <div class="container">
+    <div class="logo row"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 942 559.9"><style type="text/css">.st0{fill:#1D1E30;}</style><circle cx="749" cy="125.5" r="25.7" class="st0"/><path d="M643.3 211.5c0 21.2 0 76.5 0 91.8 0 19.5-3.5 90.9-76.1 90.9-75.9 0-74.3-71.3-74.3-98.8 0-23.4 0-70.4 0-83.8h-39v94.1s-8.1 128.5 111.3 128.5c119.4 0 115.4-124.5 115.4-124.5v-98.2h-37.3zM816.5 45.2H855v378.5h-38.5zM504 472.7c-79.4 0-194.9-12-268.3-12.8-12.2 0-23 1.5-32.6 3.9l13-11.6c14.3-12.9 37.6-20.9 43.4-22 94.4-18.6 164.8-93.7 164.8-212.8C424.3 83.2 329.3 0 212.1 0S0 76.9 0 217.3c0 126.8 84.9 208 193.1 216.5 0 0 5.7.1 6.4 3.6.6 3.1-4.8 7.6-4.8 7.6l-64.4 59.6 12.4 13.4 23.8-21.3c13.3-10.6 35.1-23.6 62.1-23.6 89.3 0 188.2 89.1 280.1 86.9 134.4-3.2 165.7-93 169.1-104.6.2-.4-55.6 17.3-173.8 17.3zM39.4 217.3c0-114.3 77.3-177 172.8-177 95.4 0 172.8 67.7 172.8 177 0 112.6-77.3 177-172.8 177-95.5-.1-172.8-67.8-172.8-177zM903.5 45.2H942v378.5h-38.5zM729.5 211.1H768v212.5h-38.5z" class="st0"/></svg></div>
+    <h1>Your powerful, rich text editor.</h1>
+    <div class="actions row">
+      <a href="/docs/" class="action documentation">Documentation</a>
+      <a href="/docs/download/" class="action">
+        Download v
+      </a>
+    </div>
+    <div class="users row">
+      <h3>Trusted By</h3>
+    </div>
+  </div>
+</footer>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    
+    
+      
+      
+    
+      
+      
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('h1, h2, h3, h4', $('#docs-container')).each(function(i, h) {
+    if (!h.id) return;
+    $('<a class="anchor" href="#' + h.id + '"></a>').prependTo($(h));
+  });
+  $('#sidebar-container .sidebar-button').click(function() {
+    $('#sidebar-container').toggleClass('active');
+  });
+  docsearch({
+    apiKey: '281facf513620e95600126795a00ab6c',
+    indexName: 'quilljs',
+    inputSelector: '.search-item input',
+    debug: false
+  });
+});
+</script>
+      
+    
+      
+      
+    
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $('.navbar-open').click(function() {
+        $('.navbar-drop').addClass('active');
+      });
+      $('.navbar-close').click(function() {
+        $('.navbar-drop').removeClass('active');
+      });
+
+      var counts = $('.github-count');
+      if (counts.length > 0) {
+        $.getJSON('https://api.github.com/search/repositories?q=quill+user:quilljs+repo:quill&sort=stars&order=desc', function(data) {
+          if (data.items && data.items[0].full_name === 'quilljs/quill') {
+            counts.text(data.items[0].stargazers_count.toLocaleString());
+          }
+        });
+      }
+    });
+    </script>
+    </div>
+  </body>
+</html>

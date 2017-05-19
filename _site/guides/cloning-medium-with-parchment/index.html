@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cloning Medium with Parchment - Quill</title>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="language" content="english">
+<meta name="viewport" content="width=device-width">
+
+<meta name="description" content="Quill is a free, open source WYSIWYG editor built for the modern web. With its modular architecture and expressive API, it is completely customizable to fit any need.">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@quilljs">
+
+<meta name="twitter:title" content="Cloning Medium with Parchment - Quill">
+
+<meta name="twitter:description" content="Quill is a free, open source WYSIWYG editor built for the modern web.">
+<meta name="twitter:image" content="http://quilljs.com/assets/images/brand-asset.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://quilljs.com/guides/cloning-medium-with-parchment/">
+<meta property="og:image" content="http://quilljs.com/assets/images/brand-asset.png">
+<meta property="og:title" content="Cloning Medium with Parchment - Quill">
+<meta property="og:site_name" content="Quill">
+<link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+<link type="application/atom+xml" rel="alternate" href="https://quilljs.com/feed.xml" title="Quill - Your powerful, rich text editor" />
+    <link rel="stylesheet" href="/assets/css/base.css">
+    
+    
+      
+      
+    
+      
+      
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css">
+      
+    
+      
+      
+    
+      
+      
+        <style>
+.codepen {
+  height: 408px;
+}
+</style>
+      
+    
+      
+      
+    
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-19077541-2', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+  window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(r?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","removeEventProperty","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
+  heap.load("1135832181");
+</script>
+  </head>
+  <body>
+    <header>
+  <nav class="navbar-drop">
+    <button class="navbar-close"></button>
+    <ul>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/docs/quickstart/">Documentation</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/guides/why-quill/">Guides</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/playground/">Playground</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/blog/">Blog</a>
+      </li>
+      <li class="navbar-item">
+        <span class="github-button dark-bg">
+  <a class="github-action" target="_blank" title="Star Quill on Github" href="https://github.com/quilljs/quill/">
+    <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.3 6.53 5.47 7.6.4.06.55-.18.55-.4 0-.18 0-.8 0-1.48-2.02.37-2.54-.5-2.7-.94-.1-.23-.48-.94-.82-1.13-.28-.15-.68-.52 0-.53.62 0 1.07.58 1.22.82.72 1.2 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.77-.2-3.63-.9-3.63-3.95 0-.87.3-1.6.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.2 2.2.83.64-.18 1.32-.27 2-.27.68 0 1.36.1 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.93.08 2.13.5.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.3.25.54.73.54 1.48 0 1.08 0 1.94 0 2.2 0 .22.15.47.55.4C13.7 14.52 16 11.52 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    <span>Star</span>
+  </a>
+  <a class="github-count" target="_blank" title="Quill Stargazers" href="https://github.com/quilljs/quill/stargazers">8,000</a>
+</span>
+      </li>
+    </ul>
+  </nav>
+  <nav class="container">
+    <ul class="navbar-list">
+      <li class="navbar-item">
+        <a class="navbar-link" href="/docs/quickstart/">Documentation</a>
+      </li>
+      <li class="active navbar-item">
+        <a class="navbar-link" href="/guides/why-quill/">Guides</a>
+      </li>
+      <li class="logo-item">
+        <a class="logo" href="/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 942 559.9"><style type="text/css">.st0{fill:#1D1E30;}</style><circle cx="749" cy="125.5" r="25.7" class="st0"/><path d="M643.3 211.5c0 21.2 0 76.5 0 91.8 0 19.5-3.5 90.9-76.1 90.9-75.9 0-74.3-71.3-74.3-98.8 0-23.4 0-70.4 0-83.8h-39v94.1s-8.1 128.5 111.3 128.5c119.4 0 115.4-124.5 115.4-124.5v-98.2h-37.3zM816.5 45.2H855v378.5h-38.5zM504 472.7c-79.4 0-194.9-12-268.3-12.8-12.2 0-23 1.5-32.6 3.9l13-11.6c14.3-12.9 37.6-20.9 43.4-22 94.4-18.6 164.8-93.7 164.8-212.8C424.3 83.2 329.3 0 212.1 0S0 76.9 0 217.3c0 126.8 84.9 208 193.1 216.5 0 0 5.7.1 6.4 3.6.6 3.1-4.8 7.6-4.8 7.6l-64.4 59.6 12.4 13.4 23.8-21.3c13.3-10.6 35.1-23.6 62.1-23.6 89.3 0 188.2 89.1 280.1 86.9 134.4-3.2 165.7-93 169.1-104.6.2-.4-55.6 17.3-173.8 17.3zM39.4 217.3c0-114.3 77.3-177 172.8-177 95.4 0 172.8 67.7 172.8 177 0 112.6-77.3 177-172.8 177-95.5-.1-172.8-67.8-172.8-177zM903.5 45.2H942v378.5h-38.5zM729.5 211.1H768v212.5h-38.5z" class="st0"/></svg></a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/playground/">Playground</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/blog/">Blog</a>
+      </li>
+      <li class="download-item">
+        <a class="action" href="/docs/download/">Download</a>
+      </li>
+    </ul>
+  </nav>
+  <button class="navbar-open">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+    
+    
+      
+        
+        
+          
+        
+      
+    
+      
+        
+        
+      
+    
+      
+        
+        
+          <div id="docs-wrapper" class="container">
+  <div class="row">
+    <div id="sidebar-container" class="three columns">
+      <button class="sidebar-button">Document Navigation</button>
+      <ul class="sidebar-list">
+        <li class="search-item"><input type="text"></li>
+        
+<li>
+  <a href="/guides/why-quill/">Why Quill</a>
+  
+</li>
+
+<li>
+  <a href="/guides/how-to-customize-quill/">How to Customize Quill</a>
+  
+</li>
+
+<li>
+  <a href="/guides/adding-quill-to-your-build-pipeline/">Adding Quill to Your Build Pipeline</a>
+  
+</li>
+
+<li>
+  <a href="/guides/building-a-custom-module/">Building a Custom Module</a>
+  
+</li>
+
+<li class="active">
+  <a href="/guides/cloning-medium-with-parchment/">Cloning Medium with Parchment</a>
+  
+</li>
+
+<li>
+  <a href="/guides/designing-the-delta-format/">Designing the Delta Format</a>
+  
+</li>
+
+<li>
+  <a href="/guides/comparison-with-other-rich-text-editors/">Comparison with Other Rich Text Editors</a>
+  
+</li>
+
+<li>
+  <a href="/guides/upgrading-to-1-0/">Upgrading to 1.0</a>
+  
+</li>
+
+      </ul>
+    </div>
+    <div id="docs-container" class="nine columns">
+      <div class="row">
+        <span class="breadcrumb">
+          <span>Guides:</span>
+          <span>Cloning Medium with Parchment</span>
+        </span>
+        <a class="edit-link" href="https://github.com/quilljs/quill/tree/develop/docs/guides/cloning-medium-with-parchment.md" target="_blank" title="Edit on Github">
+          <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.3 6.53 5.47 7.6.4.06.55-.18.55-.4 0-.18 0-.8 0-1.48-2.02.37-2.54-.5-2.7-.94-.1-.23-.48-.94-.82-1.13-.28-.15-.68-.52 0-.53.62 0 1.07.58 1.22.82.72 1.2 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.77-.2-3.63-.9-3.63-3.95 0-.87.3-1.6.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.2 2.2.83.64-.18 1.32-.27 2-.27.68 0 1.36.1 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.93.08 2.13.5.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.3.25.54.73.54 1.48 0 1.08 0 1.94 0 2.2 0 .22.15.47.55.4C13.7 14.52 16 11.52 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          <span>Edit on Github</span>
+        </a>
+      </div>
+      <hr>
+      <div id="content-container">
+        
+        <h1 id="cloning medium with parchment">Cloning Medium with Parchment</h1>
+        
+      
+    
+      
+        
+        
+      
+    
+      
+        
+        
+          
+          
+            <p>To provide a consistent editing experience, you need consistent both data and predictable behaviors. The DOM is unfortunately lacking on both of these to be a high quality data store. The solution for modern editors is to maintain its own document model to represent its contents. <a href="https://github.com/quilljs/parchment/">Parchment</a> is that solution for Quill. It is organized in its own codebase with its own API layer. Through Parchment, you can customize the content and formats Quill recognizes, or add entirely new ones.</p>
+
+<p>In this guide, we will use the building blocks provided by Parchment and Quill to replicate the editor on Medium. We will to start with the bare bones of Quill, without any themes, extraneous modules, or formats. At this basic level, Quill only understand plain text. But by the end of this guide, links, videos, and even Tweets will be understood.</p>
+
+<h3 id="groundwork">Groundwork</h3>
+
+<p>Let’s start without even using Quill, with just a textarea and button, hooked up to a dummy event listener. We’ll use jQuery for convenience throughout this guide, but neither Quill nor Parchment depends on this. We’ll also add some basic styling, with the help of <a href="https://fonts.google.com/">Google Fonts</a> and <a href="http://fontawesome.io/">Font Awesome</a>. None of this has anything to do with Quill or Parchment, so we’ll move through quickly.</p>
+
+<div data-height="400" data-theme-id="23269" data-slug-hash="oLVAKZ" data-default-tab="result" data-embed-version="2" class="codepen"></div>
+
+<h3 id="adding-quill-core">Adding Quill Core</h3>
+
+<p>Next, we’ll replace the textarea with Quill core, absent of themes, formats and extraneous modules. Open up your developer console to inspect the demo while you type into the editor. You can see the basic building blocks of a Parchment document at work.</p>
+
+<div data-height="400" data-theme-id="23269" data-slug-hash="QEoZQb" data-default-tab="result" data-embed-version="2" class="codepen"></div>
+
+<p>Like the DOM, a Parchment document is a tree. Its nodes, called Blots, are an abstraction over DOM Nodes. A few blots are already defined for us: Scroll, Block, Inline, Text and Break. As you type, a Text blot is synchronized with the corresponding DOM Text node; enters are handled by creating a new Block blot. In Parchment, Blots that can have children must, so empty Blocks are filled with a Break blot. This makes handling leaves simple and predictable. All this is organized under a root Scroll blot.</p>
+
+<p>You cannot observe an Inline blot by just typing at this point since it does not contribute meaningful structure or formatting to the document. A valid Quill document must be canonical and compact. There is only one valid DOM tree that can represent a given document, and that DOM tree contains the minimal number of nodes.</p>
+
+<p>Since <code class="highlighter-rouge">&lt;p&gt;&lt;span&gt;Text&lt;/span&gt;&lt;/p&gt;</code> and <code class="highlighter-rouge">&lt;p&gt;Text&lt;/p&gt;</code> represent the same content, the former is invalid and it is part of Quill’s optimization process to unwrap the <code class="highlighter-rouge">&lt;span&gt;</code>. Similarly, once we add formatting, <code class="highlighter-rouge">&lt;p&gt;&lt;em&gt;Te&lt;/em&gt;&lt;em&gt;st&lt;/em&gt;&lt;/p&gt;</code> and <code class="highlighter-rouge">&lt;p&gt;&lt;em&gt;&lt;em&gt;Test&lt;/em&gt;&lt;/em&gt;&lt;/p&gt;</code> are also invalid, as they are not the most compact representation.</p>
+
+<p>Because of these contraints, <strong>Quill cannot support arbitrary DOM trees and HTML changes</strong>. But as we will see, the consistency and predicability this structure provides enables us to easily build rich editing experiences.</p>
+
+<h3 id="basic-formatting">Basic Formatting</h3>
+
+<p>We mentioned earlier that an Inline does not contribute formatting. This is the exception, rather than the rule, made for the base Inline class. The base Block blot works the same way for block level elements.</p>
+
+<p>To implement bold and italics, we need only to inherit from Inline, set the <code class="highlighter-rouge">blotName</code> and <code class="highlighter-rouge">tagName</code>, and register it with Quill. For a compelete reference of the signatures of inherited and static methods and variables, take a look at <a href="https://github.com/quilljs/parchment/">Parchment</a>.</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">Inline</span> <span class="o">=</span> <span class="nx">Quill</span><span class="p">.</span><span class="kr">import</span><span class="p">(</span><span class="s1">'blots/inline'</span><span class="p">);</span>
+
+<span class="kr">class</span> <span class="nx">BoldBlot</span> <span class="kr">extends</span> <span class="nx">Inline</span> <span class="p">{</span> <span class="p">}</span>
+<span class="nx">BoldBlot</span><span class="p">.</span><span class="nx">blotName</span> <span class="o">=</span> <span class="s1">'bold'</span><span class="p">;</span>
+<span class="nx">BoldBlot</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">=</span> <span class="s1">'strong'</span><span class="p">;</span>
+
+<span class="kr">class</span> <span class="nx">ItalicBlot</span> <span class="kr">extends</span> <span class="nx">Inline</span> <span class="p">{</span> <span class="p">}</span>
+<span class="nx">ItalicBlot</span><span class="p">.</span><span class="nx">blotName</span> <span class="o">=</span> <span class="s1">'italic'</span><span class="p">;</span>
+<span class="nx">ItalicBlot</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">=</span> <span class="s1">'em'</span><span class="p">;</span>
+
+<span class="nx">Quill</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="nx">BoldBlot</span><span class="p">);</span>
+<span class="nx">Quill</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="nx">ItalicBlot</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>We follow Medium’s example here in using <code class="highlighter-rouge">strong</code> and <code class="highlighter-rouge">em</code> tags but you could just as well use <code class="highlighter-rouge">b</code> and <code class="highlighter-rouge">i</code> tags. The name of the blot will be used as the name of the format by Quill. By registering our blots, we can now use Quill’s full API on our new formats:</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="nx">Quill</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="nx">BoldBlot</span><span class="p">);</span>
+<span class="nx">Quill</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="nx">ItalicBlot</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">quill</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Quill</span><span class="p">(</span><span class="s1">'#editor'</span><span class="p">);</span>
+
+<span class="nx">quill</span><span class="p">.</span><span class="nx">insertText</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'Test'</span><span class="p">,</span> <span class="p">{</span> <span class="na">bold</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+<span class="nx">quill</span><span class="p">.</span><span class="nx">formatText</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'italic'</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="c1">// If we named our italic blot "myitalic", we would call</span>
+<span class="c1">// quill.formatText(0, 4, 'myitalic', true);</span>
+</code></pre>
+</div>
+
+<p>Let’s get rid of our dummy button handler and hook up the bold and italic buttons to Quill’s <a href="/docs/api/#format"><code class="highlighter-rouge">format()</code></a>. We will hardcode <code class="highlighter-rouge">true</code> to always add formatting for simplicity. In your application, you will can use <a href="/docs/api/#getformat"><code class="highlighter-rouge">getFormat()</code></a> to retrieve the current formatting over a arbitrary range to decide whether to add or remove a format. The <a href="/docs/modules/toolbar/">Toolbar</a> module implements this for Quill, and we will not reimplement it here.</p>
+
+<p>Open your developer console and try out Quill’s <a href="/docs/api/">APIs</a> on your new bold and italic formats! Make sure to set the context to the correct CodePen iframe to be able to access the <code class="highlighter-rouge">quill</code> variable in the demo.</p>
+
+<div data-height="400" data-theme-id="23269" data-slug-hash="VjRovy" data-default-tab="result" data-embed-version="2" class="codepen"></div>
+
+<p>Note that if you apply both bold and italic to some text, regardless of what order you do so, Quill wraps the <code class="highlighter-rouge">&lt;strong&gt;</code> tag outside of the <code class="highlighter-rouge">&lt;em&gt;</code> tag, in a consistent order.</p>
+
+<h3 id="links">Links</h3>
+
+<p>Links are slightly more complicated, since we need more than a boolean to store the link url. This affects our Link blot in two ways: creation and format retrieval. We will represent the url as a string value, but we could easily do so in other ways, such as an object with a url key, allowing for other key/value pairs to be set and define a link. We will demonstrate this later with <a href="#images">images</a>.</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kr">class</span> <span class="nx">LinkBlot</span> <span class="kr">extends</span> <span class="nx">Inline</span> <span class="p">{</span>
+  <span class="kr">static</span> <span class="nx">create</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">node</span> <span class="o">=</span> <span class="kr">super</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span>
+    <span class="c1">// Sanitize url value if desired</span>
+    <span class="nx">node</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">'href'</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+    <span class="c1">// Okay to set other non-format related attributes</span>
+    <span class="c1">// These are invisible to Parchment so must be static</span>
+    <span class="nx">node</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">'target'</span><span class="p">,</span> <span class="s1">'_blank'</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">node</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kr">static</span> <span class="nx">formats</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// We will only be called with a node already</span>
+    <span class="c1">// determined to be a Link blot, so we do</span>
+    <span class="c1">// not need to check ourselves</span>
+    <span class="k">return</span> <span class="nx">node</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">'href'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">LinkBlot</span><span class="p">.</span><span class="nx">blotName</span> <span class="o">=</span> <span class="s1">'link'</span><span class="p">;</span>
+<span class="nx">LinkBlot</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">=</span> <span class="s1">'a'</span><span class="p">;</span>
+
+<span class="nx">Quill</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="nx">LinkBlot</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>Now we can hook our link button up to a fancy <code class="highlighter-rouge">prompt</code>, again to keep things simple, before passing to Quill’s <code class="highlighter-rouge">format()</code>.</p>
+
+<div data-height="400" data-theme-id="23269" data-slug-hash="oLVKRa" data-default-tab="result" data-embed-version="2" class="codepen"></div>
+
+<h3 id="blockquote-and-headers">Blockquote and Headers</h3>
+
+<p>Blockquotes are implemented the same way as Bold blots, except we will inherit from Block, the base block level Blot. While Inline blots can be nested, Block blots cannot. Instead of wrapping, Block blots replace one another when applied to the same text range.</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">Block</span> <span class="o">=</span> <span class="nx">Quill</span><span class="p">.</span><span class="kr">import</span><span class="p">(</span><span class="s1">'blots/block'</span><span class="p">);</span>
+
+<span class="kr">class</span> <span class="nx">BlockquoteBlot</span> <span class="kr">extends</span> <span class="nx">Block</span> <span class="p">{</span> <span class="p">}</span>
+<span class="nx">BlockquoteBlot</span><span class="p">.</span><span class="nx">blotName</span> <span class="o">=</span> <span class="s1">'blockquote'</span><span class="p">;</span>
+<span class="nx">BlockquoteBlot</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">=</span> <span class="s1">'blockquote'</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>Headers are implemented exactly the same way, with only one difference: it can be represented by more than one DOM element. The value of the format by default becomes the tagName, instead of just <code class="highlighter-rouge">true</code>. We can customize this by extending <code class="highlighter-rouge">formats()</code>, similar to how we did so for <a href="#links">links</a>.</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kr">class</span> <span class="nx">HeaderBlot</span> <span class="kr">extends</span> <span class="nx">Block</span> <span class="p">{</span>
+  <span class="kr">static</span> <span class="nx">formats</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">HeaderBlot</span><span class="p">.</span><span class="nx">tagName</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">tagName</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">HeaderBlot</span><span class="p">.</span><span class="nx">blotName</span> <span class="o">=</span> <span class="s1">'header'</span><span class="p">;</span>
+<span class="c1">// Medium only supports two header sizes, so we will only demonstrate two,</span>
+<span class="c1">// but we could easily just add more tags into this array</span>
+<span class="nx">HeaderBlot</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'H1'</span><span class="p">,</span> <span class="s1">'H2'</span><span class="p">];</span>
+</code></pre>
+</div>
+
+<p>Let’s hook these new blots up to their respective buttons and add some CSS for the <code class="highlighter-rouge">&lt;blockquote&gt;</code> tag.</p>
+
+<div data-height="400" data-theme-id="23269" data-slug-hash="NAmKAR" data-default-tab="result" data-embed-version="2" class="codepen"></div>
+
+<p>Try setting some text to H1, and in your console, run <code class="highlighter-rouge">quill.getContents()</code>. You will see our custom static <code class="highlighter-rouge">formats()</code> function at work. Make sure to set the context to the correct CodePen iframe to be able to access the <code class="highlighter-rouge">quill</code> variable in the demo.</p>
+
+<h3 id="dividers">Dividers</h3>
+
+<p>Now let’s implement our first leaf Blot. While our previous Blot examples contribute formatting and implement <code class="highlighter-rouge">format()</code>, leaf Blots contribute content and implement <code class="highlighter-rouge">value()</code>. Leaf Blots can either be Text or Embed Blots, so our section divider will be an Embed. Once created, Embed Blots’ value is immutable, requiring deletion and reinsertion to change the content at that location.</p>
+
+<p>Our methodology is similar to before, except we inherit from an BlockEmbed. Embed also exists under <code class="highlighter-rouge">blots/embed</code>, but is meant for inline level blots. We want the block level implementation instead for dividers.</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">BlockEmbed</span> <span class="o">=</span> <span class="nx">Quill</span><span class="p">.</span><span class="kr">import</span><span class="p">(</span><span class="s1">'blots/block/embed'</span><span class="p">);</span>
+
+<span class="kr">class</span> <span class="nx">DividerBlot</span> <span class="kr">extends</span> <span class="nx">BlockEmbed</span> <span class="p">{</span> <span class="p">}</span>
+<span class="nx">DividerBlot</span><span class="p">.</span><span class="nx">blotName</span> <span class="o">=</span> <span class="s1">'divider'</span><span class="p">;</span>
+<span class="nx">DividerBlot</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">=</span> <span class="s1">'hr'</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>Our click handler calls <a href="/docs/api/#insertembed"><code class="highlighter-rouge">insertEmbed()</code></a>, which does not as convienently determine, save, and restore the user selection for us like <a href="/docs/api/#format"><code class="highlighter-rouge">format()</code></a> does, so we have to do a little more work to preserve selection ourselves. In addition, when we try to insert a BlockEmbed in the middle of the Block, Quill splits the Block for us. To make this behavior more clear, we will explicitly split the block oursevles by inserting a newline before inserting the divider. Take a look at the Babel tab in the CodePen for specifics.</p>
+
+<div data-height="400" data-theme-id="23269" data-slug-hash="QEPLrv" data-default-tab="result" data-embed-version="2" class="codepen"></div>
+
+<h3 id="images">Images</h3>
+
+<p>Images can be added with what we learned building the <a href="#links">Link</a> and <a href="#divider">Divider</a> blots. We will use an object for the value to show how this is supported. Our button handler to insert images will use a static value, so we are not distracted by tooltip UI code irrelevant to <a href="https://github.com/quilljs/parchment/">Parchment</a>, the focus of this guide.</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">BlockEmbed</span> <span class="o">=</span> <span class="nx">Quill</span><span class="p">.</span><span class="kr">import</span><span class="p">(</span><span class="s1">'blots/block/embed'</span><span class="p">);</span>
+
+<span class="kr">class</span> <span class="nx">ImageBlot</span> <span class="kr">extends</span> <span class="nx">BlockEmbed</span> <span class="p">{</span>
+  <span class="kr">static</span> <span class="nx">create</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">node</span> <span class="o">=</span> <span class="kr">super</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span>
+    <span class="nx">node</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">'alt'</span><span class="p">,</span> <span class="nx">value</span><span class="p">.</span><span class="nx">alt</span><span class="p">);</span>
+    <span class="nx">node</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">'src'</span><span class="p">,</span> <span class="nx">value</span><span class="p">.</span><span class="nx">url</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">node</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kr">static</span> <span class="nx">value</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">alt</span><span class="p">:</span> <span class="nx">node</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">'alt'</span><span class="p">),</span>
+      <span class="na">url</span><span class="p">:</span> <span class="nx">node</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">'src'</span><span class="p">)</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">ImageBlot</span><span class="p">.</span><span class="nx">blotName</span> <span class="o">=</span> <span class="s1">'image'</span><span class="p">;</span>
+<span class="nx">ImageBlot</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">=</span> <span class="s1">'img'</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<div data-height="400" data-theme-id="23269" data-slug-hash="Pzggmy" data-default-tab="result" data-embed-version="2" class="codepen"></div>
+
+<h3 id="videos">Videos</h3>
+
+<p>We will implement videos in a similar way as we did <a href="#images">images</a>. We could use the HTML5 <code class="highlighter-rouge">&lt;video&gt;</code> tag but we cannot play YouTube videos this way, and since this is likely the more common and relevant use case, we will use an <code class="highlighter-rouge">&lt;iframe&gt;</code> to support this. We do not have to here, but if you want multiple Blots to use the same tag, you can use <code class="highlighter-rouge">className</code> in addition to <code class="highlighter-rouge">tagName</code>, demonstrated in the next <a href="#tweet">Tweet</a> example.</p>
+
+<p>Additionally we will add support for widths and heights, as unregistered formats. Formats specific to Embeds do not have to be registered separately, as long as there is no namespace collision with registered formats. This works since Blots just pass unknown formats to its children, eventually reaching the leaves. This also allows different Embeds to handle unregistered formats differently. For example, our <a href="#images">image</a> embed from earlier could have recognized and handled the <code class="highlighter-rouge">width</code> format differently than our video does here.</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kr">class</span> <span class="nx">VideoBlot</span> <span class="kr">extends</span> <span class="nx">BlockEmbed</span> <span class="p">{</span>
+  <span class="kr">static</span> <span class="nx">create</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">node</span> <span class="o">=</span> <span class="kr">super</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span>
+
+    <span class="c1">// Set non-format related attributes with static values</span>
+    <span class="nx">node</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">'frameborder'</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">);</span>
+    <span class="nx">node</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">'allowfullscreen'</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="nx">node</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kr">static</span> <span class="nx">formats</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// We still need to report unregistered embed formats</span>
+    <span class="kd">let</span> <span class="nx">format</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">hasAttribute</span><span class="p">(</span><span class="s1">'height'</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nx">format</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">'height'</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">hasAttribute</span><span class="p">(</span><span class="s1">'width'</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nx">format</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">'width'</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">format</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kr">static</span> <span class="nx">value</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">node</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">'src'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">format</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Handle unregistered embed formats</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">name</span> <span class="o">===</span> <span class="s1">'height'</span> <span class="o">||</span> <span class="nx">name</span> <span class="o">===</span> <span class="s1">'width'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">domNode</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">domNode</span><span class="p">.</span><span class="nx">removeAttribute</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="kr">super</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">VideoBlot</span><span class="p">.</span><span class="nx">blotName</span> <span class="o">=</span> <span class="s1">'video'</span><span class="p">;</span>
+<span class="nx">VideoBlot</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">=</span> <span class="s1">'iframe'</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>Note if you open your console and call <a href="/docs/api/#getcontents"><code class="highlighter-rouge">getContents</code></a>, Quill will report the video as:</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="p">{</span>
+  <span class="nl">ops</span><span class="p">:</span> <span class="p">[{</span>
+    <span class="na">insert</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">video</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">src</span><span class="p">:</span> <span class="s1">'https://www.youtube.com/embed/QHH3iSeDBLo?showinfo=0'</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">height</span><span class="p">:</span> <span class="s1">'170'</span><span class="p">,</span>
+      <span class="na">width</span><span class="p">:</span> <span class="s1">'400'</span>
+    <span class="p">}</span>
+  <span class="p">}]</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<div data-height="400" data-theme-id="23269" data-slug-hash="qNwWzW" data-default-tab="result" data-embed-version="2" class="codepen"></div>
+
+<h3 id="tweets">Tweets</h3>
+
+<p>Medium supports many embed types, but we will just focus on Tweets for this guide. The Tweet blot is implemented almost exactly the same as <a href="#images">images</a>. We take advantage of the fact that Embed blots do not have to correspond to a void node. It can be any arbitrary node and Quill will treat it like a void node and not traverse its children or descendants. This allows us to use a <code class="highlighter-rouge">&lt;div&gt;</code> and the native Twitter Javascript library to do what it pleases within the <code class="highlighter-rouge">&lt;div&gt;</code> container we specify.</p>
+
+<p>Since our root Scroll Blot also uses a <code class="highlighter-rouge">&lt;div&gt;</code>, we also specify a <code class="highlighter-rouge">className</code> to disambiguate. Note Inline blots use <code class="highlighter-rouge">&lt;span&gt;</code> and Block Blots use <code class="highlighter-rouge">&lt;p&gt;</code> by default, so if you would like to use these tags for your custom Blots, you will have to specify a <code class="highlighter-rouge">className</code> in addition to a <code class="highlighter-rouge">tagName</code>.</p>
+
+<p>We use the Tweet id as the value defining our Blot. Again our click handler uses a static value to avoid distraction from irrelevant UI code.</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kr">class</span> <span class="nx">TweetBlot</span> <span class="kr">extends</span> <span class="nx">BlockEmbed</span> <span class="p">{</span>
+  <span class="kr">static</span> <span class="nx">create</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">node</span> <span class="o">=</span> <span class="kr">super</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span>
+    <span class="nx">node</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="nx">id</span><span class="p">;</span>
+    <span class="c1">// Allow twitter library to modify our contents</span>
+    <span class="nx">twttr</span><span class="p">.</span><span class="nx">widgets</span><span class="p">.</span><span class="nx">createTweet</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">node</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">node</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kr">static</span> <span class="nx">value</span><span class="p">(</span><span class="nx">domNode</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">domNode</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">TweetBlot</span><span class="p">.</span><span class="nx">blotName</span> <span class="o">=</span> <span class="s1">'tweet'</span><span class="p">;</span>
+<span class="nx">TweetBlot</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">=</span> <span class="s1">'div'</span><span class="p">;</span>
+<span class="nx">TweetBlot</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">'tweet'</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<div data-height="400" data-theme-id="23269" data-slug-hash="vKrBjE" data-default-tab="result" data-embed-version="2" class="codepen"></div>
+
+<h3 id="final-polish">Final Polish</h3>
+
+<p>We began with just a bunch of buttons and a Quill core that just understands plaintext. With Parchment, we able able to add bold, italic, links, blockquotes, headers, section dividers, images, videos, and even Tweets. All of this comes while maintaining a predictable and consistent document, allowing us to use Quill’s powerful <a href="/docs/api/">APIs</a> with these new formats and content.</p>
+
+<p>Let’s add some final polish to finish off our demo. It won’t compare to Medium’s UI, but we’ll try to get close.</p>
+
+<div data-height="400" data-theme-id="23269" data-slug-hash="qNJrYB" data-default-tab="result" data-embed-version="2" class="codepen"></div>
+          
+        
+          
+          
+        
+          
+          
+            </div>
+      <div class="row" id="pagination-container">
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+          
+          
+            <a class="prev" href="/guides/building-a-custom-module/">
+              <span class="label">Building a Custom Module</span>
+              <span class="arrow">
+                <span class="tip"></span>
+                <span class="shaft"></span>
+              </span>
+            </a>
+          
+          
+            <a class="next" href="/guides/designing-the-delta-format/">
+              <span class="label">Designing the Delta Format</span>
+              <span class="arrow">
+                <span class="tip"></span>
+                <span class="shaft"></span>
+              </span>
+            </a>
+          
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <hr>
+  </div>
+
+  <div class="feature row">
+  <div class="six columns details">
+    <h2>An Open Source Project</h2>
+    <span>Quill is permissively licensed under BSD. Use it freely in personal or commercial projects. Join the growing community on Github!</span>
+    <div>
+    <span class="github-button">
+  <a class="github-action" target="_blank" title="Star Quill on Github" href="https://github.com/quilljs/quill/">
+    <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.3 6.53 5.47 7.6.4.06.55-.18.55-.4 0-.18 0-.8 0-1.48-2.02.37-2.54-.5-2.7-.94-.1-.23-.48-.94-.82-1.13-.28-.15-.68-.52 0-.53.62 0 1.07.58 1.22.82.72 1.2 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.77-.2-3.63-.9-3.63-3.95 0-.87.3-1.6.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.2 2.2.83.64-.18 1.32-.27 2-.27.68 0 1.36.1 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.93.08 2.13.5.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.3.25.54.73.54 1.48 0 1.08 0 1.94 0 2.2 0 .22.15.47.55.4C13.7 14.52 16 11.52 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    <span>Star</span>
+  </a>
+  <a class="github-count" target="_blank" title="Quill Stargazers" href="https://github.com/quilljs/quill/stargazers">8,000</a>
+</span>
+    </div>
+  </div>
+  <img class="six columns" src="/assets/images/features/open-source.svg">
+</div>
+</div>
+          
+        
+          
+          
+        
+          
+          
+            
+          
+        
+      
+    
+    <footer>
+  <div class="container">
+    <div class="logo row"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 942 559.9"><style type="text/css">.st0{fill:#1D1E30;}</style><circle cx="749" cy="125.5" r="25.7" class="st0"/><path d="M643.3 211.5c0 21.2 0 76.5 0 91.8 0 19.5-3.5 90.9-76.1 90.9-75.9 0-74.3-71.3-74.3-98.8 0-23.4 0-70.4 0-83.8h-39v94.1s-8.1 128.5 111.3 128.5c119.4 0 115.4-124.5 115.4-124.5v-98.2h-37.3zM816.5 45.2H855v378.5h-38.5zM504 472.7c-79.4 0-194.9-12-268.3-12.8-12.2 0-23 1.5-32.6 3.9l13-11.6c14.3-12.9 37.6-20.9 43.4-22 94.4-18.6 164.8-93.7 164.8-212.8C424.3 83.2 329.3 0 212.1 0S0 76.9 0 217.3c0 126.8 84.9 208 193.1 216.5 0 0 5.7.1 6.4 3.6.6 3.1-4.8 7.6-4.8 7.6l-64.4 59.6 12.4 13.4 23.8-21.3c13.3-10.6 35.1-23.6 62.1-23.6 89.3 0 188.2 89.1 280.1 86.9 134.4-3.2 165.7-93 169.1-104.6.2-.4-55.6 17.3-173.8 17.3zM39.4 217.3c0-114.3 77.3-177 172.8-177 95.4 0 172.8 67.7 172.8 177 0 112.6-77.3 177-172.8 177-95.5-.1-172.8-67.8-172.8-177zM903.5 45.2H942v378.5h-38.5zM729.5 211.1H768v212.5h-38.5z" class="st0"/></svg></div>
+    <h1>Your powerful, rich text editor.</h1>
+    <div class="actions row">
+      <a href="/docs/" class="action documentation">Documentation</a>
+      <a href="/docs/download/" class="action">
+        Download v
+      </a>
+    </div>
+    <div class="users row">
+      <h3>Trusted By</h3>
+    </div>
+  </div>
+</footer>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    
+    
+      
+      
+    
+      
+      
+        <script src="//codepen.io/assets/embed/ei.js" type="text/javascript"></script>
+      
+    
+      
+      
+    
+      
+      
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('h1, h2, h3, h4', $('#docs-container')).each(function(i, h) {
+    if (!h.id) return;
+    $('<a class="anchor" href="#' + h.id + '"></a>').prependTo($(h));
+  });
+  $('#sidebar-container .sidebar-button').click(function() {
+    $('#sidebar-container').toggleClass('active');
+  });
+  docsearch({
+    apiKey: '281facf513620e95600126795a00ab6c',
+    indexName: 'quilljs',
+    inputSelector: '.search-item input',
+    debug: false
+  });
+});
+</script>
+      
+    
+      
+      
+    
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $('.navbar-open').click(function() {
+        $('.navbar-drop').addClass('active');
+      });
+      $('.navbar-close').click(function() {
+        $('.navbar-drop').removeClass('active');
+      });
+
+      var counts = $('.github-count');
+      if (counts.length > 0) {
+        $.getJSON('https://api.github.com/search/repositories?q=quill+user:quilljs+repo:quill&sort=stars&order=desc', function(data) {
+          if (data.items && data.items[0].full_name === 'quilljs/quill') {
+            counts.text(data.items[0].stargazers_count.toLocaleString());
+          }
+        });
+      }
+    });
+    </script>
+    </div>
+  </body>
+</html>

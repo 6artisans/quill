@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Quill - Your powerful, rich text editor</title>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="language" content="english">
+<meta name="viewport" content="width=device-width">
+
+<meta name="description" content="Quill is a free, open source WYSIWYG editor built for the modern web. With its modular architecture and expressive API, it is completely customizable to fit any need.">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@quilljs">
+
+<meta name="twitter:title" content="Your powerful, rich text editor">
+
+<meta name="twitter:description" content="Quill is a free, open source WYSIWYG editor built for the modern web.">
+<meta name="twitter:image" content="http://quilljs.com/assets/images/brand-asset.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://quilljs.com/">
+<meta property="og:image" content="http://quilljs.com/assets/images/brand-asset.png">
+<meta property="og:title" content="Quill - Your powerful, rich text editor">
+<meta property="og:site_name" content="Quill">
+<link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+<link type="application/atom+xml" rel="alternate" href="https://quilljs.com/feed.xml" title="Quill - Your powerful, rich text editor" />
+    <link rel="stylesheet" href="/assets/css/base.css">
+    
+    
+      
+      
+    
+      
+      
+        <link href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css" rel="stylesheet">
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<link href="../quill.bubble.css" rel="stylesheet">
+<link href="../quill.snow.css" rel="stylesheet">
+      
+    
+      
+      
+    
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-19077541-2', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+  window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(r?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","removeEventProperty","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
+  heap.load("1135832181");
+</script>
+  </head>
+  <body class="home">
+    <header>
+  <nav class="navbar-drop">
+    <button class="navbar-close"></button>
+    <ul>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/docs/quickstart/">Documentation</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/guides/why-quill/">Guides</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/playground/">Playground</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/blog/">Blog</a>
+      </li>
+      <li class="navbar-item">
+        <span class="github-button dark-bg">
+  <a class="github-action" target="_blank" title="Star Quill on Github" href="https://github.com/quilljs/quill/">
+    <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.3 6.53 5.47 7.6.4.06.55-.18.55-.4 0-.18 0-.8 0-1.48-2.02.37-2.54-.5-2.7-.94-.1-.23-.48-.94-.82-1.13-.28-.15-.68-.52 0-.53.62 0 1.07.58 1.22.82.72 1.2 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.77-.2-3.63-.9-3.63-3.95 0-.87.3-1.6.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.2 2.2.83.64-.18 1.32-.27 2-.27.68 0 1.36.1 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.93.08 2.13.5.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.3.25.54.73.54 1.48 0 1.08 0 1.94 0 2.2 0 .22.15.47.55.4C13.7 14.52 16 11.52 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    <span>Star</span>
+  </a>
+  <a class="github-count" target="_blank" title="Quill Stargazers" href="https://github.com/quilljs/quill/stargazers">8,000</a>
+</span>
+      </li>
+    </ul>
+  </nav>
+  <nav class="container">
+    <ul class="navbar-list">
+      <li class="navbar-item">
+        <a class="navbar-link" href="/docs/quickstart/">Documentation</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/guides/why-quill/">Guides</a>
+      </li>
+      <li class="logo-item">
+        <a class="logo" href="/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 942 559.9"><style type="text/css">.st0{fill:#1D1E30;}</style><circle cx="749" cy="125.5" r="25.7" class="st0"/><path d="M643.3 211.5c0 21.2 0 76.5 0 91.8 0 19.5-3.5 90.9-76.1 90.9-75.9 0-74.3-71.3-74.3-98.8 0-23.4 0-70.4 0-83.8h-39v94.1s-8.1 128.5 111.3 128.5c119.4 0 115.4-124.5 115.4-124.5v-98.2h-37.3zM816.5 45.2H855v378.5h-38.5zM504 472.7c-79.4 0-194.9-12-268.3-12.8-12.2 0-23 1.5-32.6 3.9l13-11.6c14.3-12.9 37.6-20.9 43.4-22 94.4-18.6 164.8-93.7 164.8-212.8C424.3 83.2 329.3 0 212.1 0S0 76.9 0 217.3c0 126.8 84.9 208 193.1 216.5 0 0 5.7.1 6.4 3.6.6 3.1-4.8 7.6-4.8 7.6l-64.4 59.6 12.4 13.4 23.8-21.3c13.3-10.6 35.1-23.6 62.1-23.6 89.3 0 188.2 89.1 280.1 86.9 134.4-3.2 165.7-93 169.1-104.6.2-.4-55.6 17.3-173.8 17.3zM39.4 217.3c0-114.3 77.3-177 172.8-177 95.4 0 172.8 67.7 172.8 177 0 112.6-77.3 177-172.8 177-95.5-.1-172.8-67.8-172.8-177zM903.5 45.2H942v378.5h-38.5zM729.5 211.1H768v212.5h-38.5z" class="st0"/></svg></a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/playground/">Playground</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/blog/">Blog</a>
+      </li>
+      <li class="download-item">
+        <a class="action" href="/docs/download/">Download</a>
+      </li>
+    </ul>
+  </nav>
+  <button class="navbar-open">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+    
+    
+      
+        
+        
+          
+        
+      
+    
+      
+        
+        
+      
+    
+      
+        
+        
+          
+          
+            <div id="above-container">
+  <div class="container">
+    <div id="users-container">
+      <h2>
+        <button class="prev">
+          <span class="arrow">
+            <span class="tip"></span>
+            <span class="shaft"></span>
+          </span>
+        </button>
+        Switch Examples
+        <button class="next">
+          <span class="arrow">
+            <span class="tip"></span>
+            <span class="shaft"></span>
+          </span>
+        </button>
+      </h2>
+      <h1>Your powerful, rich text editor.</h1>
+      <ul>
+        <li>Trusted by:</li>
+        <li>
+          <a href="https://www.salesforce.com" target="_blank">
+            <img src="/assets/images/users/salesforce.png">
+          </a>
+        </li>
+        <li>
+          <a href="http://www.voxmedia.com/" target="_blank">
+            <img src="/assets/images/users/voxmedia.png">
+          </a>
+        </li>
+        <li>
+          <a href="https://www.lever.co/" target="_blank">
+            <img src="/assets/images/users/lever.png">
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div id="laptop-container">
+      <div id="camera-container">
+        <span class="camera"></span>
+        <span class="camera active"></span>
+        <span class="camera"></span>
+      </div>
+      <div id="demo-container">
+        <div id="carousel-container">
+          <div id="bubble-wrapper">
+            <div id="bubble-container">
+              <div class="editor"></div>
+            </div>
+          </div>
+          <div id="snow-wrapper">
+            <div id="snow-container">
+              <div class="toolbar">
+                <span class="ql-formats">
+                  <select class="ql-header">
+                    <option value="1">Heading</option>
+                    <option value="2">Subheading</option>
+                    <option selected>Normal</option>
+                  </select>
+                  <select class="ql-font">
+                    <option selected>Sailec Light</option>
+                    <option value="sofia">Sofia Pro</option>
+                    <option value="slabo">Slabo 27px</option>
+                    <option value="roboto">Roboto Slab</option>
+                    <option value="inconsolata">Inconsolata</option>
+                    <option value="ubuntu">Ubuntu Mono</option>
+                  </select>
+                </span>
+                <span class="ql-formats">
+                  <button class="ql-bold"></button>
+                  <button class="ql-italic"></button>
+                  <button class="ql-underline"></button>
+                </span>
+                <span class="ql-formats">
+                  <button class="ql-list" value="ordered"></button>
+                  <button class="ql-list" value="bullet"></button>
+                  <select class="ql-align">
+                    <option selected></option>
+                    <option value="center"></option>
+                    <option value="right"></option>
+                    <option value="justify"></option>
+                  </select>
+                </span>
+                <span class="ql-formats">
+                  <button class="ql-link"></button>
+                  <button class="ql-image"></button>
+                  <button class="ql-video"></button>
+                </span>
+                <span class="ql-formats">
+                  <button class="ql-formula"></button>
+                  <button class="ql-code-block"></button>
+                </span>
+                <span class="ql-formats">
+                  <button class="ql-clean"></button>
+                </span>
+              </div>
+              <div class="editor">
+                <h1 class="ql-align-center">Quill Rich Text Editor</h1>
+                <p><br></p>
+                <p>Quill is a free, <a href="https://github.com/quilljs/quill/">open source</a> WYSIWYG editor built for the modern web. With its <a href="http://quilljs.com/docs/modules/">modular architecture</a> and expressive <a href="http://quilljs.com/docs/api/">API</a>, it is completely customizable to fit any need.</p>
+                <p><br></p>
+                <iframe class="ql-video ql-align-center" src="https://www.youtube.com/embed/QHH3iSeDBLo?showinfo=0" width="560" height="238" allowfullscreen="true" frameborder="0"></iframe>
+                <p><br></p>
+                <p><br></p>
+                <h2 class="ql-align-center">Getting Started is Easy</h2>
+                <p><br></p>
+                <pre>// &lt;link href="https://cdn.quilljs.com/./quill.snow.css" rel="stylesheet"&gt;
+// &lt;script src="https://cdn.quilljs.com/./quill.min.js" type="text/javascript"&gt;&lt;/script&gt;
+
+var quill = new Quill('#editor', {
+  modules: {
+    toolbar: '#toolbar'
+  },
+  theme: 'snow'
+});
+
+// Open your browser's developer console to try out the API!
+</pre>
+                <p><br></p>
+                <p><br></p>
+                <p class="ql-align-center"><strong>Built with</strong></p>
+                <p class="ql-align-center">&nbsp;<span class="ql-formula" data-value="x^2 + (y - \sqrt[3]{x^2})^2 = 1"></span>&nbsp;</p>
+                <p><br></p>
+              </div>
+            </div>
+          </div>
+          <div id="full-wrapper">
+            <div id="full-container">
+              <div class="editor"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="detail-container">
+  <div class="container">
+    <a class="action" href="/docs/download/">Download Now</a>
+    <h1>An API Driven Rich Text Editor</h1>
+  </div>
+</div>
+
+<div id="features-container">
+  <div class="container">
+    <div class="row">
+      <div class="feature columns">
+        <img src="/assets/images/features/developers.svg">
+        <div class="details">
+          <h2>Built for Developers</h2>
+          <span>Granular access to the editor's content, changes and events through a simple API. Works consistently and deterministically with JSON as both input and output.</span>
+          <a class="action-link" href="/docs/">View documentation</a>
+        </div>
+      </div>
+      <div class="feature columns">
+        <img src="/assets/images/features/cross-platform.svg">
+        <div class="details">
+          <h2>Cross Platform</h2>
+          <span>Supports all modern browsers on desktops, tablets and phones. Experience the same consistent behavior and produced HTML across platforms.</span>
+          <a class="action-link" href="//github.com/quilljs/quill/#readme">See the Chart</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="github-wrapper">
+      <div id="github-container">
+        <span class="github-button">
+  <a class="github-action" target="_blank" title="Star Quill on Github" href="https://github.com/quilljs/quill/">
+    <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.3 6.53 5.47 7.6.4.06.55-.18.55-.4 0-.18 0-.8 0-1.48-2.02.37-2.54-.5-2.7-.94-.1-.23-.48-.94-.82-1.13-.28-.15-.68-.52 0-.53.62 0 1.07.58 1.22.82.72 1.2 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.77-.2-3.63-.9-3.63-3.95 0-.87.3-1.6.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.2 2.2.83.64-.18 1.32-.27 2-.27.68 0 1.36.1 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.93.08 2.13.5.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.3.25.54.73.54 1.48 0 1.08 0 1.94 0 2.2 0 .22.15.47.55.4C13.7 14.52 16 11.52 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    <span>Star</span>
+  </a>
+  <a class="github-count" target="_blank" title="Quill Stargazers" href="https://github.com/quilljs/quill/stargazers">8,000</a>
+</span>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="feature row">
+      <div class="columns details">
+        <h2>Fits Like a Glove</h2>
+        <span>Used in small projects and giant Fortune 500s alike. Start simple with the Quill core then easily customize or add your own extensions later if your product needs grow.</span>
+        <a class="action-link" href="/docs/">Learn More</a>
+      </div>
+      <img class="columns" src="/assets/images/features/scale.svg">
+    </div>
+  </div>
+</div>
+          
+        
+          
+          
+        
+          
+          
+            
+          
+        
+      
+    
+    <footer>
+  <div class="container">
+    <div class="logo row"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 942 559.9"><style type="text/css">.st0{fill:#1D1E30;}</style><circle cx="749" cy="125.5" r="25.7" class="st0"/><path d="M643.3 211.5c0 21.2 0 76.5 0 91.8 0 19.5-3.5 90.9-76.1 90.9-75.9 0-74.3-71.3-74.3-98.8 0-23.4 0-70.4 0-83.8h-39v94.1s-8.1 128.5 111.3 128.5c119.4 0 115.4-124.5 115.4-124.5v-98.2h-37.3zM816.5 45.2H855v378.5h-38.5zM504 472.7c-79.4 0-194.9-12-268.3-12.8-12.2 0-23 1.5-32.6 3.9l13-11.6c14.3-12.9 37.6-20.9 43.4-22 94.4-18.6 164.8-93.7 164.8-212.8C424.3 83.2 329.3 0 212.1 0S0 76.9 0 217.3c0 126.8 84.9 208 193.1 216.5 0 0 5.7.1 6.4 3.6.6 3.1-4.8 7.6-4.8 7.6l-64.4 59.6 12.4 13.4 23.8-21.3c13.3-10.6 35.1-23.6 62.1-23.6 89.3 0 188.2 89.1 280.1 86.9 134.4-3.2 165.7-93 169.1-104.6.2-.4-55.6 17.3-173.8 17.3zM39.4 217.3c0-114.3 77.3-177 172.8-177 95.4 0 172.8 67.7 172.8 177 0 112.6-77.3 177-172.8 177-95.5-.1-172.8-67.8-172.8-177zM903.5 45.2H942v378.5h-38.5zM729.5 211.1H768v212.5h-38.5z" class="st0"/></svg></div>
+    <h1>Your powerful, rich text editor.</h1>
+    <div class="actions row">
+      <a href="/docs/" class="action documentation">Documentation</a>
+      <a href="/docs/download/" class="action">
+        Download v
+      </a>
+    </div>
+    <div class="users row">
+      <h3>Trusted By</h3>
+    </div>
+  </div>
+</footer>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    
+    
+      
+      
+    
+      
+      
+        <script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js" type="text/javascript"></script>
+<script src="../quill.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+(function() {
+  $(document).ready(function() {
+    var fonts = ['sofia', 'slabo', 'roboto', 'inconsolata', 'ubuntu'];
+    var Font = Quill.import('formats/font');
+    Font.whitelist = fonts;
+    Quill.register(Font, true);
+
+    var bubbleEditor = new Quill('#bubble-container .editor', {
+      bounds: '#bubble-container .editor',
+      modules: {
+        'formula': true,
+        'syntax': true
+      },
+      theme: 'bubble'
+    });
+
+    var snowEditor = new Quill('#snow-container .editor', {
+      bounds: '#snow-container .editor',
+      modules: {
+        'formula': true,
+        'syntax': true,
+        'toolbar': '#snow-container .toolbar'
+      },
+      theme: 'snow'
+    });
+
+    var fullEditor = new Quill('#full-container .editor', {
+      bounds: '#full-container .editor',
+      modules: {
+        'formula': true,
+        'syntax': true,
+        'toolbar': [
+          [{ 'font': fonts }, { 'size': [] }],
+          [ 'bold', 'italic', 'underline', 'strike' ],
+          [{ 'color': [] }, { 'background': [] }],
+          [{ 'script': 'super' }, { 'script': 'sub' }],
+          [{ 'header': '1' }, { 'header': '2' }, 'blockquote', 'code-block' ],
+          [{ 'list': 'ordered' }, { 'list': 'bullet'}, { 'indent': '-1' }, { 'indent': '+1' }],
+          [ 'direction', { 'align': [] }],
+          [ 'link', 'image', 'video', 'formula' ],
+          [ 'clean' ]
+        ],
+      },
+      theme: 'snow'
+    });
+
+    var editors = [bubbleEditor, snowEditor, fullEditor];
+    switchEditor(1, snowEditor, true);
+    var initialContent = snowEditor.getContents();
+    bubbleEditor.setContents(initialContent);
+    fullEditor.setContents(initialContent);
+
+    $('.camera').click(function() {
+      var index = $(this).index();
+      $('#above-container').addClass('demo-active');
+      switchEditor(index, editors[index]);
+    });
+
+    $('#above-container .prev').click(function() {
+      var index = editors.indexOf(window.quill) - 1;
+      switchEditor(index, editors[index]);
+    });
+    $('#above-container .next').click(function() {
+      var index = editors.indexOf(window.quill) + 1;
+      switchEditor(index, editors[index]);
+    });
+
+    var users = [{
+      'Intuit': 'https://www.intuit.com/',
+      'LinkedIn': 'https://www.linkedin.com/',
+      'Salesforce': 'http://www.salesforce.com/'
+    }, {
+      'Asana': 'https://asana.com/',
+      'Gannett': 'http://www.gannett.com/',
+      'Hubspot': 'https://www.hubspot.com/',
+      'USA Today': 'http://www.usatoday.com/',
+      'Vox Media': 'http://www.voxmedia.com/'
+    }, {
+      'Buffer': 'https://buffer.com/',
+      'Front': 'https://frontapp.com/',
+      'Lever': 'https://www.lever.co/',
+      'Reedsy': 'https://reedsy.com/'
+    }];
+    // Show users randomly
+    $('#users-container a').each(function(i, link) {
+      var bucket = users[i];
+      var keys = Object.keys(bucket);
+      var name = keys[Math.floor(Math.random() * keys.length)];
+      $(link).attr({ href: bucket[name], title: name });
+      $('img', link).attr({
+        src: '/assets/images/users/' + (name.toLowerCase().replace(/\s/g, '')) + '.png',
+        alt: name
+      });
+    });
+
+    $('#demo-container .ql-editor').one('touchstart', function(event) {
+      $('#above-container').addClass('demo-active');
+      event.preventDefault();
+    });
+
+    $('#demo-container .ql-editor').one('focus', function(event) {
+      if (!$('#above-container').hasClass('demo-active')) {
+        $('#above-container').addClass('demo-active');
+      }
+    });
+
+    console.log("Welcome to Quill!\n\nThe editor on this page is available via `quill`. Give the API a try:\n\n\tquill.formatText(11, 4, 'bold', true);\n\nVisit the API documenation page to learn more: http://quilljs.com/docs/api/\n");
+
+    loadFonts();
+    $('#carousel-container').animate({ opacity: 1 }, 500);
+  });
+
+  function loadFonts() {
+    window.WebFontConfig = {
+      google: { families: [ 'Inconsolata::latin', 'Ubuntu+Mono::latin', 'Slabo+27px::latin', 'Roboto+Slab::latin' ] }
+    };
+    (function() {
+      var wf = document.createElement('script');
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+      wf.type = 'text/javascript';
+      wf.async = 'true';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(wf, s);
+    })();
+  }
+
+  function switchEditor(i, editor, skip) {
+    // Expose as global so people can easily try out the API
+    window.quill = editor;
+    if (!skip) console.info('window.quill is now bound to', editor);
+
+    $('.camera').removeClass('active');
+    $('.camera:eq(' + i + ')').addClass('active');
+
+    $('.prev, .next').css('visibility', 'visible');
+    if (i === 0) $('.prev').css('visibility', 'hidden');
+    if (i === 2) $('.next').css('visibility', 'hidden');
+
+    $('#carousel-container').css('margin-left', (i*-100) + '%');
+  }
+})();
+</script>
+      
+    
+      
+      
+    
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $('.navbar-open').click(function() {
+        $('.navbar-drop').addClass('active');
+      });
+      $('.navbar-close').click(function() {
+        $('.navbar-drop').removeClass('active');
+      });
+
+      var counts = $('.github-count');
+      if (counts.length > 0) {
+        $.getJSON('https://api.github.com/search/repositories?q=quill+user:quilljs+repo:quill&sort=stars&order=desc', function(data) {
+          if (data.items && data.items[0].full_name === 'quilljs/quill') {
+            counts.text(data.items[0].stargazers_count.toLocaleString());
+          }
+        });
+      }
+    });
+    </script>
+    </div>
+  </body>
+</html>

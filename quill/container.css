@@ -1,0 +1,45 @@
+/*!
+ * Quill Editor v1.2.3
+ * https://quilljs.com/
+ * Copyright (c) 2014, Jason Chen
+ * Copyright (c) 2013, salesforce.com
+ */
+.ql-condition:after {
+  content: "IF";
+}
+.ql-locked:after {
+  content: "\1F512";
+}
+.ql-active.ql-locked:after {
+  content: "\1F513";
+}
+.ql-safelist:after {
+  content: "OL";
+}
+.ql-annotation:after {
+  content: "\270E";
+}
+condition,
+locked {
+  display: block;
+}
+condition {
+  background-color: #dfd;
+}
+locked {
+  background-color: #fdd;
+}
+locked > condition {
+  background-color: #ffc;
+}
+safelistitem {
+  display: block;
+}
+safelistitem:before {
+  display: inline-block;
+  margin-right: 5px;
+  content: attr(number);
+}
+avv-annotation {
+  background-color: #ff4;
+}
